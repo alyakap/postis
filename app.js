@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true })) //??
 
 
 app.listen(port, () => {
-    console.log("Server running on port 3000");
+    console.log(`Server running on port ${port}`);
     console.log(team); //checking my data 
    });
 
