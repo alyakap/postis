@@ -6,6 +6,6 @@ tasksRouter
     .get('/',handleGetTasksList)
     .get('/:id', handleGetSpecificTask)
     .get('/team/:id',handleGetUserTask)
-    .post('/tasks', handlePostTask)
+    .post('/', handlePostTask)
 
 module.exports=tasksRouter;

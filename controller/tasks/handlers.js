@@ -16,7 +16,9 @@ const handleGetUserTask= function (req, res){
 } 
 
 const handlePostTask = function (req, res) {
+    console.log(req.body.json());
     const tasks=postTask(req.body)
+    console.log(tasks);
     res.json({
         data:tasks
     })

@@ -24,8 +24,8 @@ const getUserTask = id => {
     
     const task={
         id: data.id,
-        task: data.name,
-        by: data.email,
+        task: data.task,
+        by: data.by,
         done: false
     }
     tasks.push(task)
