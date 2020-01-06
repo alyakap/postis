@@ -16,7 +16,7 @@ const getTask=id=>{
 const getUserTask = id => {
     
     const findMember=team.find(x=>{
-        return x.id==id
+        return x.id===id
     });
     return findMember;
 }
