@@ -1,49 +1,31 @@
-const express=require('express');
-const team=require('./data')
-const port=3000;
-const app=express();
+//requiring express and middlewares
+const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
+const mainRouter = require('./controller')
 
 
-
-const bodyParser = require('body-parser') 
-app.use(bodyParser.json()) //started to use body-parser
-// app.use(bodyParser.urlencoded({ extended: true })) //??
-
-
+//start server
+const port = 4567;
+const app = express();
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-    console.log(team); //checking my data 
-   });
-
-app.get('/',function(req, res){
-    console.log('/home was requested'); 
-    res.send(team)
+    console.log(`Server is listening on port:${port}...`);
 })
 
-app.get('/members',function(req, res){
-    console.log('/members was requested'); 
-    res.send(team.map(a=>a.member));
-})
+//setting up middlewares
 
-app.get('/member/:id',function(req, res){
-    const requestedId=req.url.split('/')[2];
-    console.log(`a certain member with id: ${requestedId} was requested`);
-    res.send(team.filter(member=>member.id==requestedId))
-})
-app.post('/member',function(req, res){
-    console.log(req.body);
-    team.push(req.body);
-    res.send(team);
-})
+// add logs on the server's terminal
+app.use(morgan('tiny'));
 
-app.put('/member/:id',function(req, res){
-    const tobeUpdatedId=req.url.split('/')[2];
-    team[tobeUpdatedId-1]=req.body;
-    res.send(team);
-})
+// add cors support
+app.use(cors());
 
-app.delete('/member/:id',function(req, res){
-    const tobeDeletedId=req.url.split('/')[2];
-    res.send(team.filter(member=>member.id!=tobeDeletedId)); //not use !==
-})
-//addind another remote git 
+// support parsing of application/json type post data
+app.use(express.json());
+
+//support parsing of application/x-www-form-urlencoded post data
+app.use(express.urlencoded({ extended: true }));
+
+
+mainRouter(app)  // require('./controller')(app) 
+
