@@ -13,4 +13,3 @@ tasksRouter
 module.exports=tasksRouter;
 
 //to do:
-//categories
