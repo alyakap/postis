@@ -1,10 +1,10 @@
 const tasksRouter= require('express').Router();
 
-const {handleGetTasksList, handleGetFilteredTasks,handleGetSpecificTask}=require('./handlers');
+const {handleGetTasksList, handleGetSpecificTask, handleGetUserTask}=require('./handlers');
 
 tasksRouter
     .get('/',handleGetTasksList)
     .get('/:id', handleGetSpecificTask)
-    .get('/filtered/:ids', handleGetFilteredTasks)
+    .get('/team/:id',handleGetUserTask)
 
 module.exports=tasksRouter;
