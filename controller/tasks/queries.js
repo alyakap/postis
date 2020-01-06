@@ -33,11 +33,18 @@ const getUserTask = id => {
     
  }
  const deleteTask= (id) => {
-    
     const index = tasks.findIndex(n => n.id === id)
     tasks.splice(index)
-    return users
+    return users 
+ }
+ const updateTask=(id, data)=>{
     
+    const index = tasks.findIndex(x => x.id === id)
+
+    tasks[index].task = data.task;
+    tasks[index].by = data.by;
+    return tasks;   
+  
  }
 
 module.exports={
@@ -45,5 +52,6 @@ module.exports={
     getTask,
     getUserTask,
     postTask,
-    deleteTask
+    deleteTask,
+    updateTask
 }

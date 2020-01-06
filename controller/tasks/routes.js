@@ -1,6 +1,6 @@
 const tasksRouter= require('express').Router();
 
-const {handleGetTasksList, handleGetSpecificTask, handleGetUserTask, handlePostTask, handleDeleteTask}=require('./handlers');
+const {handleGetTasksList, handleGetSpecificTask, handleGetUserTask, handlePostTask, handleDeleteTask, handleUpdateTask}=require('./handlers');
 
 tasksRouter
     .get('/',handleGetTasksList)
@@ -8,5 +8,6 @@ tasksRouter
     .get('/team/:id',handleGetUserTask)
     .post('/', handlePostTask)
     .delete('/:id', handleDeleteTask)
+    .put('/:id', handleUpdateTask)
 
 module.exports=tasksRouter;
