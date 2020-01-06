@@ -1,4 +1,4 @@
-const { getTasks, getTask, getUserTask, postTask} = require('./queries');
+const { getTasks, getTask, getUserTask, postTask, deleteTask} = require('./queries');
 
 const handleGetTasksList= function (req,res){
     res.send(getTasks());
@@ -16,17 +16,21 @@ const handleGetUserTask= function (req, res){
 } 
 
 const handlePostTask = function (req, res) {
-    console.log(req.body.json());
+    console.log(req.body);
     const tasks=postTask(req.body)
     console.log(tasks);
-    res.json({
-        data:tasks
-    })
+    res.json(tasks)
+}
+
+const handleDeleteTask= function (req, res){
+    const tasks=deleteTask(req.params.id)
+    res.json(tasks);
 }
 
 module.exports={
     handleGetTasksList,
     handleGetSpecificTask,
     handleGetUserTask,
-    handlePostTask
+    handlePostTask,
+    handleDeleteTask
 }
