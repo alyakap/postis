@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:11-alpine
+    ports:
+      - 5432:5432
+    env_file:
+      - .env_file
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
