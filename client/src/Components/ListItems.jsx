@@ -8,7 +8,12 @@ import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 
 export const mainListItems = (
   <div>
-    <ListItem button>
+    <ListItem
+      button
+      onClick={e => {
+        console.log("home");
+      }}
+    >
       <ListItemIcon>
         <HomeIcon />
       </ListItemIcon>

@@ -21,6 +21,10 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
   },
+  heroContent: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 6)
+  },
   toolbar: {
     paddingRight: 24 // keep right padding when drawer closed
   },
@@ -155,7 +159,31 @@ export default function App() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}></Container>
+        <Container maxWidth="lg" className={classes.container}>
+          <div className={classes.heroContent}>
+            <Container maxWidth="sm">
+              <Typography
+                component="h1"
+                variant="h2"
+                align="center"
+                color="textPrimary"
+                gutterBottom
+              >
+                Hey, Optis Marketing Team!
+              </Typography>
+              <Typography
+                variant="h5"
+                align="center"
+                color="textSecondary"
+                paragraph
+              >
+                Keep Optis Branding consistent. With Postis, you can plan,
+                create, assign campaigns and tasks.
+              </Typography>
+              <div className={classes.heroButtons}></div>
+            </Container>
+          </div>
+        </Container>
       </main>
     </div>
   );
