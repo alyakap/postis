@@ -13,9 +13,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Container from "@material-ui/core/Container";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { mainListItems } from "./Components/ListItems";
+import ListItems from "./Components/ListItems";
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,6 +26,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(8, 0, 6)
   },
   toolbar: {
+    backgroundColor: "#4db6ac",
     paddingRight: 24 // keep right padding when drawer closed
   },
   toolbarIcon: {
@@ -51,6 +52,7 @@ const useStyles = makeStyles(theme => ({
     })
   },
   menuButton: {
+    color: "#fafafa",
     marginRight: 36
   },
   menuButtonHidden: {
@@ -62,6 +64,7 @@ const useStyles = makeStyles(theme => ({
   drawerPaper: {
     position: "relative",
     whiteSpace: "nowrap",
+    backgroundColor: "#212121",
     width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
@@ -74,9 +77,9 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
-    width: theme.spacing(7),
+    width: theme.spacing(5),
     [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9)
+      width: theme.spacing(7)
     }
   },
   appBarSpacer: theme.mixins.toolbar,
@@ -97,6 +100,12 @@ const useStyles = makeStyles(theme => ({
   },
   fixedHeight: {
     height: 240
+  },
+  color: {
+    color: "#fafafa"
+  },
+  text: {
+    color: "#fafafa"
   }
 }));
 
@@ -120,7 +129,7 @@ export default function App() {
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
-            color="inherit"
+            //color="white"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             className={clsx(
@@ -150,11 +159,13 @@ export default function App() {
       >
         <div className={classes.toolbarIcon}>
           <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
+            <ChevronLeftIcon className={classes.text} />
           </IconButton>
         </div>
-        <Divider />
-        <List>{mainListItems}</List>
+        <Divider className={classes.color} />
+        <List>
+          <ListItems />
+        </List>
         <Divider />
       </Drawer>
       <main className={classes.content}>
@@ -178,7 +189,8 @@ export default function App() {
                 paragraph
               >
                 Keep Optis Branding consistent. With Postis, you can plan,
-                create, assign campaigns and tasks.
+                create, assign campaigns and tasks, work and get things done
+                together!
               </Typography>
               <div className={classes.heroButtons}></div>
             </Container>
