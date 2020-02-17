@@ -11,12 +11,15 @@
     "knex": "^0.20.9",
     "morgan": "^1.9.1",
     "nodemon": "^2.0.2",
+    "pg": "^7.18.1",
     "uuid": "^3.3.3"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "server": "nodemon app.js",
+    "db": "docker-compose up -d",
+    "start": "npm run db && npm run server"
   },
   "repository": {
     "type": "git",

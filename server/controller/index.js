@@ -1,9 +1,9 @@
-const tasksRouter= require('./tasks/routes');
-const teamRouter= require('./team/routes');
+const campaignsRouter = require("./campaigns/routes");
+//const teamRouter= require('./team/routes');
 
-const mainRouter=function (app) {
-    app.use('/tasks', tasksRouter);
-    app.use('/team', teamRouter);
-}
+const mainRouter = function(app) {
+  app.use("/campaigns", campaignsRouter);
+  //app.use("/team", teamRouter);
+};
 
-module.exports=mainRouter;
+module.exports = mainRouter;

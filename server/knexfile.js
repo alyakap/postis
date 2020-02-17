@@ -12,13 +12,18 @@ module.exports = {
   development: {
     client: "pg",
     connection: {
+      port: process.env.POSTGRES_PORT,
       database: process.env.POSTGRES_DB,
       user: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD
-    }
-    // migrations: {
-    //   tableName: 'knex_migrations'
-    // }
+    },
+    migrations: {
+      directory: "./db/migrations"
+    },
+    seeds: {
+      directory: "./db/seeds"
+    },
+    port: {}
   }
 
   // production: {
