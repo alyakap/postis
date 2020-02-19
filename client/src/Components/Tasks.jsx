@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 import {
   withStyles,
@@ -33,8 +34,67 @@ const styles = theme => ({
 class Tasks extends Component {
   constructor(props) {
     super(props);
-    console.log("1");
+    this.state = {
+      tasks: {
+        loading: false,
+        error: false,
+        data: []
+      }
+    };
   }
+  componentDidMount() {
+    this.setState({
+      ...this.state,
+      tasks: {
+        ...this.state.tasks,
+        loading: true
+      }
+    });
+    axios
+      .get(`http://localhost:4567/tasks`)
+      .then(response => {
+        if (response.data) {
+          this.setState({
+            tasks: {
+              loading: false,
+              error: false,
+              data: [...response.data]
+            }
+          });
+        } else {
+          this.setState({
+            tasks: {
+              error: false,
+              loading: false,
+              data: []
+            }
+          });
+        }
+      })
+      .catch(error => {
+        this.setState({
+          ...this.state,
+          tasks: {
+            ...this.state.tasks,
+            error: true,
+            loading: false
+          }
+        });
+        throw error;
+      });
+  }
+  formatDateTime = tasTime => {
+    var date = new Date(tasTime);
+    return (
+      date.getHours() +
+      ":" +
+      date.getUTCHours() +
+      "   " +
+      date.getDate() +
+      "/" +
+      (date.getMonth() + 1)
+    );
+  };
   render() {
     const { classes } = this.props;
     return (
@@ -54,25 +114,25 @@ class Tasks extends Component {
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Dessert (100g serving)</TableCell>
-                    <TableCell align="right">Calories</TableCell>
-                    <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                    <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                    <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                    <TableCell>Task Id</TableCell>
+                    <TableCell align="left">Title</TableCell>
+                    <TableCell align="right">Created by</TableCell>
+                    <TableCell align="right">Created at</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {/* {rows.map(row => (
-              <TableRow key={row.name}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-              </TableRow>
-            ))} */}
+                  {this.state.tasks.data.map(task => (
+                    <TableRow key={task.id}>
+                      <TableCell component="th" scope="row">
+                        {task.id}
+                      </TableCell>
+                      <TableCell align="left">{task.title}</TableCell>
+                      <TableCell align="right">{task.created_user}</TableCell>
+                      <TableCell align="right">
+                        {this.formatDateTime(task.created)}
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </TableContainer>

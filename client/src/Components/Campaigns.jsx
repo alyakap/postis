@@ -3,7 +3,7 @@ import axios from "axios";
 //import { makeStyles } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-//import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Typography from "@material-ui/core/Typography";
 
@@ -31,6 +31,11 @@ const styles = theme => ({
     flexShrink: 0
   },
   secondaryHeading: {
+    fontSize: theme.typography.pxToRem(15),
+    flexBasis: "90%",
+    color: theme.palette.text.secondary
+  },
+  thirdHeading: {
     fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary
   }
@@ -69,7 +74,7 @@ class Campaigns extends React.Component {
       .then(response => {
         if (response.data) {
           const newData = response.data.map(campaign => {
-            return { content: campaign, expanded: false };
+            return { ...campaign, expanded: false };
           });
           this.setState({
             campaigns: {
@@ -101,17 +106,34 @@ class Campaigns extends React.Component {
       });
   }
 
-  handleChange = panel => (event, isExpanded) => {
-    const [setExpanded] = React.useState(false);
-    setExpanded(isExpanded ? panel : false);
+  handleExpand = campaign => e => {
+    const items = this.state.campaigns.data;
+    const index = items.indexOf(campaign);
+    let item = items[index];
+    item.expanded = !campaign.expanded;
+    this.setState({
+      ...this.state,
+      campaigns: {
+        ...this.state.campaigns,
+        data: items
+      }
+    });
   };
-  setExpanded() {
-    const [expanded] = React.useState(false);
-    return expanded;
-  }
+  formatDateTime = camTime => {
+    var date = new Date(camTime);
+    return (
+      date.getHours() +
+      ":" +
+      date.getUTCHours() +
+      "   " +
+      date.getDate() +
+      "/" +
+      (date.getMonth() + 1)
+    );
+  };
+
   render() {
     const { classes } = this.props;
-
     return this.state.campaigns.loading ? (
       <ColorLinearProgress className={classes.margin} />
     ) : (
@@ -130,18 +152,28 @@ class Campaigns extends React.Component {
             {this.state.campaigns.data.map(campaign => {
               return (
                 <ExpansionPanel
-                  key={campaign.content.id}
+                  key={campaign.id}
                   expanded={campaign.expanded}
-                  onChange={this.handleChange(`panel${campaign.content.id}`)}
+                  onChange={this.handleExpand(campaign)}
                 >
                   <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography className={classes.heading}>
-                      <FontAwesomeIcon icon={["fab", campaign.content.icon]} />
+                      <FontAwesomeIcon icon={["fab", campaign.icon]} />
                     </Typography>
                     <Typography className={classes.secondaryHeading}>
-                      {campaign.content.title}
+                      {campaign.title}
+                    </Typography>
+                    <Typography className={classes.thirdHeading}>
+                      {this.formatDateTime(campaign.created)}
                     </Typography>
                   </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <Typography>
+                      Nulla facilisi. Phasellus sollicitudin nulla et quam
+                      mattis feugiat. Aliquam eget maximus est, id dignissim
+                      quam.
+                    </Typography>
+                  </ExpansionPanelDetails>
                 </ExpansionPanel>
               );
             })}

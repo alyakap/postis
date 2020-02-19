@@ -8,13 +8,13 @@ exports.seed = function(knex) {
           id: 1,
           title: "React",
           color: "Blue",
-          icon: "rocket"
+          icon: "react"
         },
         {
           id: 2,
           title: "Angular",
           color: "Red",
-          icon: "rocket"
+          icon: "angular"
         }
       ]);
     });
