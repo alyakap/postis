@@ -6,7 +6,7 @@ import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import Typography from "@material-ui/core/Typography";
-
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Container } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -164,6 +164,8 @@ class Campaigns extends React.Component {
                       {campaign.title}
                     </Typography>
                     <Typography className={classes.thirdHeading}>
+                      <FontAwesomeIcon icon={faCalendar} />
+                      {"  "}
                       {this.formatDateTime(campaign.created)}
                     </Typography>
                   </ExpansionPanelSummary>

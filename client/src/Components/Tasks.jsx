@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   withStyles,
@@ -117,7 +119,9 @@ class Tasks extends Component {
                     <TableCell>Task Id</TableCell>
                     <TableCell align="left">Title</TableCell>
                     <TableCell align="right">Created by</TableCell>
-                    <TableCell align="right">Created at</TableCell>
+                    <TableCell align="right">
+                      <FontAwesomeIcon icon={faCalendar} />
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
