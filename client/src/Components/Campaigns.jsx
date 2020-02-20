@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import AddCampaignModal from "./AddCampaignModal";
 //import { makeStyles } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
@@ -11,6 +12,8 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Container } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 
 const styles = theme => ({
   root: {
@@ -38,6 +41,9 @@ const styles = theme => ({
   thirdHeading: {
     fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary
+  },
+  primary: {
+    backgroundColor: "#4DB6AC"
   }
 });
 const ColorLinearProgress = withStyles({
@@ -57,7 +63,8 @@ class Campaigns extends React.Component {
         loading: false,
         error: false,
         data: []
-      }
+      },
+      addCampaignModal: false
     };
   }
 
@@ -131,57 +138,93 @@ class Campaigns extends React.Component {
       (date.getMonth() + 1)
     );
   };
+  handleClickOpenModal = () => {
+    this.setState({
+      ...this.state,
+      addCampaignModal: true
+    });
+  };
+
+  handleCloseModal = () => {
+    this.setState({
+      ...this.state,
+      addCampaignModal: false
+    });
+  };
 
   render() {
     const { classes } = this.props;
+
     return this.state.campaigns.loading ? (
       <ColorLinearProgress className={classes.margin} />
     ) : (
-      <Container maxWidth="lg" className={classes.container}>
-        <div className={classes.heroContent}>
-          <div className={classes.root}>
-            <Typography
-              component="h1"
-              variant="h2"
-              align="left"
-              color="textPrimary"
-              gutterBottom
-            >
-              Campaigns
-            </Typography>
-            {this.state.campaigns.data.map(campaign => {
-              return (
-                <ExpansionPanel
-                  key={campaign.id}
-                  expanded={campaign.expanded}
-                  onChange={this.handleExpand(campaign)}
+      <>
+        <Container maxWidth="lg" className={classes.container}>
+          <AddCampaignModal
+            addCampaignModal={this.state.addCampaignModal}
+            closeModal={this.handleCloseModal}
+          />
+          <div className={classes.heroContent}>
+            <div className={classes.root}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center"
+                }}
+              >
+                <Typography
+                  component="h1"
+                  variant="h2"
+                  align="left"
+                  color="textPrimary"
+                  gutterBottom
                 >
-                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography className={classes.heading}>
-                      <FontAwesomeIcon icon={["fab", campaign.icon]} />
-                    </Typography>
-                    <Typography className={classes.secondaryHeading}>
-                      {campaign.title}
-                    </Typography>
-                    <Typography className={classes.thirdHeading}>
-                      <FontAwesomeIcon icon={faCalendar} />
-                      {"  "}
-                      {this.formatDateTime(campaign.created)}
-                    </Typography>
-                  </ExpansionPanelSummary>
-                  <ExpansionPanelDetails>
-                    <Typography>
-                      Nulla facilisi. Phasellus sollicitudin nulla et quam
-                      mattis feugiat. Aliquam eget maximus est, id dignissim
-                      quam.
-                    </Typography>
-                  </ExpansionPanelDetails>
-                </ExpansionPanel>
-              );
-            })}
+                  Campaigns
+                </Typography>
+                <Fab
+                  className={classes.primary}
+                  onClick={this.handleClickOpenModal}
+                  aria-label="add"
+                >
+                  <AddIcon />
+                </Fab>
+              </div>
+
+              {this.state.campaigns.data.map(campaign => {
+                return (
+                  <ExpansionPanel
+                    key={campaign.id}
+                    expanded={campaign.expanded}
+                    onChange={this.handleExpand(campaign)}
+                  >
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                      <Typography className={classes.heading}>
+                        <FontAwesomeIcon icon={["fab", campaign.icon]} />
+                      </Typography>
+                      <Typography className={classes.secondaryHeading}>
+                        {campaign.title}
+                      </Typography>
+                      <Typography className={classes.thirdHeading}>
+                        <FontAwesomeIcon icon={faCalendar} />
+                        {"  "}
+                        {this.formatDateTime(campaign.created)}
+                      </Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                      <Typography>
+                        Nulla facilisi. Phasellus sollicitudin nulla et quam
+                        mattis feugiat. Aliquam eget maximus est, id dignissim
+                        quam.
+                      </Typography>
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </>
     );
   }
 }

@@ -19,7 +19,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon app.js",
     "db": "docker-compose up -d",
-    "start": "npm run db && npm run server"
+    "start": "npm run db && npm run server",
+    "stop": "docker-compose down"
   },
   "repository": {
     "type": "git",

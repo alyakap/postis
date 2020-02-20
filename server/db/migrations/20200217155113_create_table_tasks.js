@@ -17,13 +17,13 @@ exports.up = function(knex) {
       .references("id")
       .inTable("users");
     tbl.timestamp("assigned").nullable();
-    tbl.integer("assigned_user");
+    tbl.integer("assigned_user").nullable();
     tbl
       .foreign("assigned_user")
       .references("id")
       .inTable("users");
-    tbl.string("updated").nullable();
-    tbl.integer("updated_user");
+    tbl.timestamp("updated").nullable();
+    tbl.integer("updated_user").nullable();
     tbl
       .foreign("updated_user")
       .references("id")
