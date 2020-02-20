@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
-import AddCampaignModal from "./AddCampaignModal";
+
+import AddModal from "./AddModal";
 //import { makeStyles } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
@@ -160,7 +161,7 @@ class Campaigns extends React.Component {
     ) : (
       <>
         <Container maxWidth="lg" className={classes.container}>
-          <AddCampaignModal
+          <AddModal
             addCampaignModal={this.state.addCampaignModal}
             closeModal={this.handleCloseModal}
           />
