@@ -1,11 +1,16 @@
 const tasksRouter = require("express").Router();
 
 const {
-  handleGetTasksList
+  handleGetTasksList,
+  handlePostTask,
+  handleDeleteTask
   //  handleGetSpecificTask, handleGetUserTask, handlePostTask, handleDeleteTask, handleUpdateTask
 } = require("./handlers");
 
+tasksRouter.post("/", handlePostTask);
+
 tasksRouter.get("/", handleGetTasksList);
+tasksRouter.delete("/:id", handleDeleteTask);
 // .get('/:id', handleGetSpecificTask)
 // .get('/team/:id',handleGetUserTask)
 // .post('/', handlePostTask)

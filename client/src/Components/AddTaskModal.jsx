@@ -5,12 +5,13 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import { withStyles } from "@material-ui/core/styles";
-import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
+
+import DoneAllIcon from "@material-ui/icons/DoneAll";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+// import InputLabel from "@material-ui/core/InputLabel";
+// import FormControl from "@material-ui/core/FormControl";
+// import Select from "@material-ui/core/Select";
 import axios from "axios";
 
 const styles = theme => ({
@@ -33,13 +34,12 @@ const styles = theme => ({
   }
 });
 
-class AddModal extends React.Component {
+class AddTaskModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       title: "",
-      color: "",
-      icon: ""
+      description: ""
     };
   }
   handleChange = field => {
@@ -51,34 +51,34 @@ class AddModal extends React.Component {
   };
 
   handleSubmitClose = () => {
+    const props = this.props;
     axios
-      .post("http://localhost:4567/campaigns", this.state)
+      .post("http://localhost:4567/tasks", this.state)
       .then(function(response) {
-        console.log(response);
+        props.getTasks();
+        props.closeModal();
       })
       .catch(function(error) {
         console.log(error);
+        props.closeModal();
       });
-    console.log(this.state);
-    this.props.closeModal();
-    this.props.getCampaigns();
   };
   render() {
     const { classes } = this.props;
     return (
       <>
         <Dialog
-          open={this.props.addCampaignModal}
+          open={this.props.addTaskModal}
           onClose={() => this.props.closeModal()}
           aria-labelledby="form-dialog-title"
         >
           <DialogContent>
             <div className={classes.paper}>
               <Avatar className={classes.avatar}>
-                <AddToPhotosIcon />
+                <DoneAllIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Add Campaign
+                Add Task
               </Typography>
               <form className={classes.form} noValidate>
                 <TextField
@@ -97,33 +97,15 @@ class AddModal extends React.Component {
                 <TextField
                   margin="normal"
                   fullWidth
-                  name="color"
-                  label="Color"
+                  multiline
+                  rows="4"
+                  name="description"
+                  label="Description"
                   type="text"
-                  id="color"
+                  id="description"
                   autoComplete="current-password"
-                  onChange={this.handleChange("color")}
+                  onChange={this.handleChange("description")}
                 />
-                <FormControl style={{ width: "100%", marginTop: "16px" }}>
-                  <InputLabel htmlFor="outlined-age-native-simple">
-                    Icon
-                  </InputLabel>
-                  <Select
-                    native
-                    value={this.state.iconStr}
-                    onChange={this.handleChange("icon")}
-                    // labelWidth={labelWidth}
-                    inputProps={{
-                      name: "age",
-                      id: "outlined-age-native-simple"
-                    }}
-                  >
-                    <option value="" />
-                    <option value="react">React</option>
-                    <option value="angular">Angular</option>
-                    <option value="java">Java</option>
-                  </Select>
-                </FormControl>
               </form>
             </div>
           </DialogContent>
@@ -140,4 +122,4 @@ class AddModal extends React.Component {
     );
   }
 }
-export default withStyles(styles, {})(AddModal);
+export default withStyles(styles, {})(AddTaskModal);

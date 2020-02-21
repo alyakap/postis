@@ -1,6 +1,16 @@
 const knex = require("../../db");
 
 const getTasks = async () => await knex.select("*").from("tasks");
+const postTask = async data => await knex("tasks").insert(data);
+const deleteTask = async id =>
+  await knex("tasks")
+    .where({ id })
+    .delete();
+
+// const deleteTask = async id => await knex("tasks").where(222).delete();
+// is not the same as
+
+// const deleteTask = async id => await knex("tasks").where({id: 222}).delete();
 
 // const getTask=id=>{
 //     const findTask=tasks.find(task =>{
@@ -44,10 +54,10 @@ const getTasks = async () => await knex.select("*").from("tasks");
 //  }
 
 module.exports = {
-  getTasks
+  getTasks,
+  postTask,
+  deleteTask
   // getTask,
   // getUserTask,
-  // postTask,
-  // deleteTask,
   // updateTask
 };

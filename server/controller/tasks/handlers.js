@@ -1,7 +1,14 @@
-const { getTasks } = require("./queries");
+const { getTasks, postTask, deleteTask } = require("./queries");
 
 const handleGetTasksList = async (req, res) => {
   res.send(await getTasks());
+};
+const handlePostTask = async (req, res) => {
+  res.send(await postTask(req.body));
+};
+const handleDeleteTask = async (req, res) => {
+  const tasks = await deleteTask(parseInt(req.params.id));
+  res.json(tasks);
 };
 
 // const handleGetSpecificTask= function (req, res){
@@ -31,10 +38,10 @@ const handleGetTasksList = async (req, res) => {
 // }
 
 module.exports = {
-  handleGetTasksList
+  handleGetTasksList,
+  handlePostTask,
+  handleDeleteTask
   // handleGetSpecificTask,
   // handleGetUserTask,
-  // handlePostTask,
-  // handleDeleteTask,
   // handleUpdateTask
 };
