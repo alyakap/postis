@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddIcon from "@material-ui/icons/Add";
 import AddTaskModal from "./AddTaskModal";
 import DeleteIcon from "@material-ui/icons/Delete";
+import Button from "@material-ui/core/Button";
 
 import {
   withStyles,
@@ -129,6 +130,18 @@ class Tasks extends Component {
       addTaskModal: false
     });
   };
+  deleteTask = id => {
+    const refresh = this.getTasks;
+    axios
+      .delete(`http://localhost:4567/tasks/${id}`, { id })
+      .then(function(response) {
+        console.log(response.data);
+        refresh();
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
   render() {
     const { classes } = this.props;
     return this.state.tasks.loading ? (
@@ -183,7 +196,9 @@ class Tasks extends Component {
                   {this.state.tasks.data.map(task => (
                     <TableRow key={task.id}>
                       <TableCell component="th" scope="row">
-                        <DeleteIcon />
+                        <Button onClick={() => this.deleteTask(task.id)}>
+                          <DeleteIcon />
+                        </Button>
                       </TableCell>
                       <TableCell align="left">{task.title}</TableCell>
                       <TableCell align="right">{task.created_user}</TableCell>

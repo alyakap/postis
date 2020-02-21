@@ -15,6 +15,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import DeleteIcon from "@material-ui/icons/Delete";
+import Button from "@material-ui/core/Button";
 
 const styles = theme => ({
   root: {
@@ -150,6 +152,17 @@ class Campaigns extends React.Component {
       addCampaignModal: false
     });
   };
+  deleteCampaign = id => {
+    const refresh = this.getCampaigns;
+    axios
+      .delete(`http://localhost:4567/campaigns/${id}`, { id })
+      .then(function(response) {
+        refresh();
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
 
   render() {
     const { classes } = this.props;
@@ -199,6 +212,13 @@ class Campaigns extends React.Component {
                     onChange={this.handleExpand(campaign)}
                   >
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                      <Typography className={classes.heading}>
+                        <Button
+                          onClick={() => this.deleteCampaign(campaign.id)}
+                        >
+                          <DeleteIcon />
+                        </Button>
+                      </Typography>
                       <Typography className={classes.heading}>
                         <FontAwesomeIcon icon={["fab", campaign.icon]} />
                       </Typography>
