@@ -71,12 +71,14 @@ class Campaigns extends React.Component {
 
   componentDidMount() {
     this.setState({
-      ...this.state,
       campaigns: {
-        ...this.state.campaigns,
         loading: true
       }
     });
+    this.getCampaigns();
+  }
+
+  getCampaigns = () => {
     axios
       .get(`http://localhost:4567/campaigns`)
       .then(response => {
@@ -103,16 +105,14 @@ class Campaigns extends React.Component {
       })
       .catch(error => {
         this.setState({
-          ...this.state,
           campaigns: {
-            ...this.state.campaigns,
             error: true,
             loading: false
           }
         });
         throw error;
       });
-  }
+  };
 
   handleExpand = campaign => e => {
     const items = this.state.campaigns.data;
@@ -120,9 +120,7 @@ class Campaigns extends React.Component {
     let item = items[index];
     item.expanded = !campaign.expanded;
     this.setState({
-      ...this.state,
       campaigns: {
-        ...this.state.campaigns,
         data: items
       }
     });
@@ -164,6 +162,7 @@ class Campaigns extends React.Component {
           <AddModal
             addCampaignModal={this.state.addCampaignModal}
             closeModal={this.handleCloseModal}
+            getCampaigns={this.getCampaigns}
           />
           <div className={classes.heroContent}>
             <div className={classes.root}>

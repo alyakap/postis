@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import axios from "axios";
 
 const styles = theme => ({
   paper: {
@@ -35,10 +36,32 @@ const styles = theme => ({
 class AddModal extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      title: "",
+      color: "",
+      icon: ""
+    };
   }
-  handleTitleChange = () => {
-    console.log("scdsac");
+  handleChange = field => {
+    return e => {
+      const newState = { ...this.state };
+      newState[field] = e.target.value;
+      this.setState(newState);
+    };
+  };
+
+  handleSubmitClose = () => {
+    axios
+      .post("http://localhost:4567/campaigns", this.state)
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    console.log(this.state);
+    this.props.closeModal();
+    this.props.getCampaigns();
   };
   render() {
     const { classes } = this.props;
@@ -68,7 +91,8 @@ class AddModal extends React.Component {
                   type="text"
                   autoComplete="Title"
                   autoFocus
-                  onChange={this.handleTitleChange}
+                  val={this.state.titleStr}
+                  onChange={this.handleChange("title")}
                 />
                 <TextField
                   margin="normal"
@@ -78,6 +102,7 @@ class AddModal extends React.Component {
                   type="text"
                   id="color"
                   autoComplete="current-password"
+                  onChange={this.handleChange("color")}
                 />
                 <FormControl style={{ width: "100%", marginTop: "16px" }}>
                   <InputLabel htmlFor="outlined-age-native-simple">
@@ -85,8 +110,8 @@ class AddModal extends React.Component {
                   </InputLabel>
                   <Select
                     native
-                    value=""
-                    // onChange={handleChange("age")}
+                    value={this.state.iconStr}
+                    onChange={this.handleChange("icon")}
                     // labelWidth={labelWidth}
                     inputProps={{
                       name: "age",
@@ -96,7 +121,7 @@ class AddModal extends React.Component {
                     <option value="" />
                     <option value="react">React</option>
                     <option value="angular">Angular</option>
-                    <option value="Java">Java</option>
+                    <option value="java">Java</option>
                   </Select>
                 </FormControl>
               </form>
@@ -106,7 +131,7 @@ class AddModal extends React.Component {
             <Button onClick={() => this.props.closeModal()} color="primary">
               Cancel
             </Button>
-            <Button onClick={() => this.props.closeModal()} color="primary">
+            <Button onClick={this.handleSubmitClose} color="primary">
               Add
             </Button>
           </DialogActions>
