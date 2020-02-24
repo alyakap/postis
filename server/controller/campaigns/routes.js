@@ -4,10 +4,12 @@ const {
   handleGetCampaignsList,
   handlePostCampaign,
   handleDeleteCampaign,
-  handleUpdateCampaign
+  handleUpdateCampaign,
+  handleGetCampaignById
 } = require("./handlers");
 
 campaignsRouter.get("/", handleGetCampaignsList);
+campaignsRouter.get("/:id", handleGetCampaignById);
 campaignsRouter.post("/", handlePostCampaign);
 campaignsRouter.delete("/:id", handleDeleteCampaign);
 campaignsRouter.put("/:id", handleUpdateCampaign);

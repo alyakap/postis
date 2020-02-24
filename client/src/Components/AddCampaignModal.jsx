@@ -68,8 +68,8 @@ class AddCampaignModal extends React.Component {
     return (
       <>
         <Dialog
-          open={this.props.addCampaignModal}
-          onClose={() => this.props.closeModal()}
+          open
+          onClose={() => this.props.handleToggleModalAddCampaign()}
           aria-labelledby="form-dialog-title"
         >
           <DialogContent>
@@ -132,7 +132,10 @@ class AddCampaignModal extends React.Component {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => this.props.closeModal()} color="primary">
+            <Button
+              onClick={() => this.props.handleToggleModalAddCampaign()}
+              color="primary"
+            >
               Cancel
             </Button>
             <Button onClick={this.handleSubmitClose} color="primary">

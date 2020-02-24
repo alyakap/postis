@@ -75,7 +75,7 @@ class Campaigns extends React.Component {
         error: false,
         data: []
       },
-      selectedItem: {},
+      selectedId: "",
       addCampaignModal: false,
       updateCampaignModal: false
     };
@@ -149,31 +149,38 @@ class Campaigns extends React.Component {
       (date.getMonth() + 1)
     );
   };
-  handleClickOpenModal = () => {
+  handleToggleModalAddCampaign = () => {
     this.setState({
       ...this.state,
-      addCampaignModal: true
+      addCampaignModal: !this.state.addCampaignModal
     });
   };
-  handleClickOpenModalUpdate = campaign => {
+  handleToggleModalUpdateCampaign = id => {
     this.setState({
-      updateCampaignModal: true,
-      selectedItem: campaign
+      ...this.state,
+      selectedId: id,
+      updateCampaignModal: !this.state.updateCampaignModal
     });
   };
+  // handleClickOpenModalUpdate = campaign => {
+  //   this.setState({
+  //     updateCampaignModal: true,
+  //     selectedItem: campaign
+  //   });
+  // };
 
-  handleCloseModal = () => {
-    this.setState({
-      ...this.state,
-      addCampaignModal: false
-    });
-  };
-  handleCloseModalUpdate = () => {
-    this.setState({
-      ...this.state,
-      updateCampaignModal: false
-    });
-  };
+  // handleCloseModal = () => {
+  //   this.setState({
+  //     ...this.state,
+  //     addCampaignModal: false
+  //   });
+  // };
+  // handleCloseModalUpdate = () => {
+  //   this.setState({
+  //     ...this.state,
+  //     updateCampaignModal: false
+  //   });
+  // };
   deleteCampaign = id => {
     const refresh = this.getCampaigns;
     axios
@@ -205,17 +212,22 @@ class Campaigns extends React.Component {
     ) : (
       <>
         <Container maxWidth="lg" className={classes.container}>
-          <AddCampaignModal
-            addCampaignModal={this.state.addCampaignModal}
-            closeModal={this.handleCloseModal}
-            getCampaigns={this.getCampaigns}
-          />
-          <UpdateCampaignModal
-            updateCampaignModal={this.state.updateCampaignModal}
-            closeModalUpdate={this.handleCloseModalUpdate}
-            getCampaigns={this.getCampaigns}
-            selectedItem={this.state.selectedItem}
-          />
+          {this.state.addCampaignModal && (
+            <AddCampaignModal
+              handleToggleModalAddCampaign={this.handleToggleModalAddCampaign}
+              getCampaigns={this.getCampaigns}
+            />
+          )}
+
+          {this.state.updateCampaignModal && (
+            <UpdateCampaignModal
+              handleToggleModalUpdateCampaign={
+                this.handleToggleModalUpdateCampaign
+              }
+              getCampaigns={this.getCampaigns}
+              id={this.state.selectedId}
+            />
+          )}
           <div className={classes.heroContent}>
             <div className={classes.root}>
               <div
@@ -236,7 +248,7 @@ class Campaigns extends React.Component {
                 </Typography>
                 <Fab
                   className={classes.primary}
-                  onClick={this.handleClickOpenModal}
+                  onClick={this.handleToggleModalAddCampaign}
                   aria-label="add"
                 >
                   <AddIcon />
@@ -264,7 +276,7 @@ class Campaigns extends React.Component {
                       <Typography>
                         <Button
                           onClick={e =>
-                            this.handleClickOpenModalUpdate(campaign)
+                            this.handleToggleModalUpdateCampaign(campaign.id)
                           }
                         >
                           <EditIcon />

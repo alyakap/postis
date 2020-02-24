@@ -51,16 +51,15 @@ class AddTaskModal extends React.Component {
   };
 
   handleSubmitClose = () => {
-    const props = this.props;
     axios
       .post("http://localhost:4567/tasks", this.state)
-      .then(function(response) {
-        props.getTasks();
-        props.closeModal();
+      .then(response => {
+        this.props.getTasks();
+        this.props.closeModal();
       })
-      .catch(function(error) {
+      .catch(error => {
         console.log(error);
-        props.closeModal();
+        this.props.closeModal();
       });
   };
   render() {

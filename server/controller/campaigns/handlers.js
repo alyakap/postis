@@ -2,11 +2,15 @@ const {
   getCampaigns,
   postCampaign,
   deleteCampaign,
-  updateCampaign
+  updateCampaign,
+  getCampaignById
 } = require("./queries");
 
 const handleGetCampaignsList = async (req, res) => {
   res.send(await getCampaigns());
+};
+const handleGetCampaignById = async (req, res) => {
+  res.send(await getCampaignById(parseInt(req.params.id)));
 };
 const handlePostCampaign = async (req, res) => {
   res.send(await postCampaign(req.body));
@@ -24,5 +28,6 @@ module.exports = {
   handleGetCampaignsList,
   handlePostCampaign,
   handleDeleteCampaign,
-  handleUpdateCampaign
+  handleUpdateCampaign,
+  handleGetCampaignById
 };
