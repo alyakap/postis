@@ -6,9 +6,13 @@ const deleteCampaign = async id =>
   await knex("campaigns")
     .where({ id })
     .delete();
-
+const updateCampaign = async data =>
+  await knex("campaigns")
+    .where({ id })
+    .update(data);
 module.exports = {
   getCampaigns,
   postCampaign,
-  deleteCampaign
+  deleteCampaign,
+  updateCampaign
 };
