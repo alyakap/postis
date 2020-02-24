@@ -78,21 +78,6 @@ class UpdateCampaignModal extends React.Component {
         });
       });
   };
-  // static getDerivedStateFromProps(props, state) {
-  //   console.log(props.selectedItem);
-  //   if (Object.entries(props.selectedItem).length !== 0 && state.ownUpdate) {
-  //     console.log("should run");
-  //     return {
-  //       data: {
-  //         id: props.selectedItem.id,
-  //         title: props.selectedItem.title,
-  //         color: props.selectedItem.color,
-  //         icon: props.selectedItem.icon
-  //       },
-  //       ownUpdate: false
-  //     };
-  //   } else return null;
-  // }
 
   handleChange = field => {
     return e => {

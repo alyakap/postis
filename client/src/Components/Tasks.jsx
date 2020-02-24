@@ -3,7 +3,7 @@ import axios from "axios";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddIcon from "@material-ui/icons/Add";
-import AddTaskModal from "./AddTaskModal";
+import AddTask from "./AddTask";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Button from "@material-ui/core/Button";
 
@@ -148,7 +148,7 @@ class Tasks extends Component {
       <ColorLinearProgress className={classes.margin} />
     ) : (
       <Container maxWidth="lg" className={classes.container}>
-        <AddTaskModal
+        <AddTask
           addTaskModal={this.state.addTaskModal}
           closeModal={this.handleCloseModal}
           getTasks={this.getTasks}

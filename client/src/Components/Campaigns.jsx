@@ -1,8 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-import AddCampaignModal from "./AddCampaignModal";
-//import { makeStyles } from "@material-ui/core/styles";
+import AddCampaign from "./AddCampaign";
 import { withStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
@@ -18,7 +17,7 @@ import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Button from "@material-ui/core/Button";
 import EditIcon from "@material-ui/icons/Edit";
-import UpdateCampaignModal from "./UpdateCampaignModal";
+import EditCampaign from "./EditCampaign";
 
 const styles = theme => ({
   root: {
@@ -162,37 +161,8 @@ class Campaigns extends React.Component {
       updateCampaignModal: !this.state.updateCampaignModal
     });
   };
-  // handleClickOpenModalUpdate = campaign => {
-  //   this.setState({
-  //     updateCampaignModal: true,
-  //     selectedItem: campaign
-  //   });
-  // };
 
-  // handleCloseModal = () => {
-  //   this.setState({
-  //     ...this.state,
-  //     addCampaignModal: false
-  //   });
-  // };
-  // handleCloseModalUpdate = () => {
-  //   this.setState({
-  //     ...this.state,
-  //     updateCampaignModal: false
-  //   });
-  // };
   deleteCampaign = id => {
-    const refresh = this.getCampaigns;
-    axios
-      .delete(`http://localhost:4567/campaigns/${id}`, { id })
-      .then(function(response) {
-        refresh();
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  };
-  editCampaign = id => {
     const refresh = this.getCampaigns;
     axios
       .delete(`http://localhost:4567/campaigns/${id}`, { id })
@@ -213,17 +183,15 @@ class Campaigns extends React.Component {
       <>
         <Container maxWidth="lg" className={classes.container}>
           {this.state.addCampaignModal && (
-            <AddCampaignModal
-              handleToggleModalAddCampaign={this.handleToggleModalAddCampaign}
+            <AddCampaign
+              toggle={this.handleToggleModalAddCampaign}
               getCampaigns={this.getCampaigns}
             />
           )}
 
           {this.state.updateCampaignModal && (
-            <UpdateCampaignModal
-              handleToggleModalUpdateCampaign={
-                this.handleToggleModalUpdateCampaign
-              }
+            <EditCampaign
+              toggle={this.handleToggleModalUpdateCampaign}
               getCampaigns={this.getCampaigns}
               id={this.state.selectedId}
             />
