@@ -5,13 +5,13 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import { withStyles } from "@material-ui/core/styles";
-import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import axios from "axios";
+import EditIcon from "@material-ui/icons/Edit";
 
 const styles = theme => ({
   paper: {
@@ -33,20 +33,38 @@ const styles = theme => ({
   }
 });
 
-class AddCampaignModal extends React.Component {
+class UpdateCampaignModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      color: "",
-      icon: ""
+      data: {
+        title: "",
+        color: "",
+        icon: ""
+      },
+      ownUpdate: true
     };
   }
+  static getDerivedStateFromProps(props, state) {
+    if (Object.entries(props.selectedItem).length !== 0 && state.ownUpdate) {
+      return {
+        data: {
+          title: props.selectedItem.title,
+          color: props.selectedItem.color,
+          icon: props.selectedItem.icon
+        },
+        ownUpdate: false
+      };
+    } else return null;
+  }
+
   handleChange = field => {
     return e => {
-      const newState = { ...this.state };
+      const newState = { ...this.state.data };
       newState[field] = e.target.value;
-      this.setState(newState);
+      this.setState({
+        data: newState
+      });
     };
   };
 
@@ -68,17 +86,17 @@ class AddCampaignModal extends React.Component {
     return (
       <>
         <Dialog
-          open={this.props.addCampaignModal}
-          onClose={() => this.props.closeModal()}
+          open={this.props.updateCampaignModal}
+          onClose={() => this.props.closeModalUpdate()}
           aria-labelledby="form-dialog-title"
         >
           <DialogContent>
             <div className={classes.paper}>
               <Avatar className={classes.avatar}>
-                <AddToPhotosIcon />
+                <EditIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Add Campaign
+                Update Campaign
               </Typography>
               <form className={classes.form} noValidate>
                 <TextField
@@ -91,7 +109,7 @@ class AddCampaignModal extends React.Component {
                   type="text"
                   autoComplete="Title"
                   autoFocus
-                  val={this.state.title}
+                  value={this.state.data.title}
                   onChange={this.handleChange("title")}
                 />
                 <TextField
@@ -101,7 +119,7 @@ class AddCampaignModal extends React.Component {
                   label="Color"
                   type="text"
                   id="color"
-                  val={this.state.color}
+                  value={this.state.data.color}
                   autoComplete="current-password"
                   onChange={this.handleChange("color")}
                 />
@@ -111,7 +129,7 @@ class AddCampaignModal extends React.Component {
                   </InputLabel>
                   <Select
                     native
-                    value={this.state.icon}
+                    value={this.state.data.icon}
                     onChange={this.handleChange("icon")}
                     // labelWidth={labelWidth}
                     inputProps={{
@@ -132,11 +150,14 @@ class AddCampaignModal extends React.Component {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => this.props.closeModal()} color="primary">
+            <Button
+              onClick={() => this.props.closeModalUpdate()}
+              color="primary"
+            >
               Cancel
             </Button>
             <Button onClick={this.handleSubmitClose} color="primary">
-              Add
+              Update
             </Button>
           </DialogActions>
         </Dialog>
@@ -144,4 +165,4 @@ class AddCampaignModal extends React.Component {
     );
   }
 }
-export default withStyles(styles, {})(AddCampaignModal);
+export default withStyles(styles, {})(UpdateCampaignModal);

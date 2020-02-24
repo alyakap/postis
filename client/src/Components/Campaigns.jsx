@@ -17,6 +17,8 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Button from "@material-ui/core/Button";
+import EditIcon from "@material-ui/icons/Edit";
+import UpdateCampaignModal from "./UpdateCampaignModal";
 
 const styles = theme => ({
   root: {
@@ -32,18 +34,19 @@ const styles = theme => ({
     paddingBottom: theme.spacing(4)
   },
   heading: {
-    fontSize: theme.typography.pxToRem(15),
-    flexBasis: "2%",
-    flexShrink: 0
+    fontSize: theme.typography.pxToRem(25),
+    flexBasis: "3%"
   },
   secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
-    flexBasis: "90%",
+    flexBasis: "80%",
+    alignItems: "center",
     color: theme.palette.text.secondary
   },
   thirdHeading: {
     fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
+    flexBasis: "10%"
   },
   primary: {
     backgroundColor: "#4DB6AC"
@@ -57,6 +60,11 @@ const ColorLinearProgress = withStyles({
     backgroundColor: "#00695c"
   }
 })(LinearProgress);
+const FlexExpansionPanelSummary = withStyles({
+  content: {
+    alignItems: "center"
+  }
+})(ExpansionPanelSummary);
 
 class Campaigns extends React.Component {
   constructor(props) {
@@ -67,7 +75,9 @@ class Campaigns extends React.Component {
         error: false,
         data: []
       },
-      addCampaignModal: false
+      selectedItem: {},
+      addCampaignModal: false,
+      updateCampaignModal: false
     };
   }
 
@@ -145,6 +155,12 @@ class Campaigns extends React.Component {
       addCampaignModal: true
     });
   };
+  handleClickOpenModalUpdate = campaign => {
+    this.setState({
+      updateCampaignModal: true,
+      selectedItem: campaign
+    });
+  };
 
   handleCloseModal = () => {
     this.setState({
@@ -152,7 +168,24 @@ class Campaigns extends React.Component {
       addCampaignModal: false
     });
   };
+  handleCloseModalUpdate = () => {
+    this.setState({
+      ...this.state,
+      updateCampaignModal: false
+    });
+  };
   deleteCampaign = id => {
+    const refresh = this.getCampaigns;
+    axios
+      .delete(`http://localhost:4567/campaigns/${id}`, { id })
+      .then(function(response) {
+        refresh();
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+  editCampaign = id => {
     const refresh = this.getCampaigns;
     axios
       .delete(`http://localhost:4567/campaigns/${id}`, { id })
@@ -176,6 +209,12 @@ class Campaigns extends React.Component {
             addCampaignModal={this.state.addCampaignModal}
             closeModal={this.handleCloseModal}
             getCampaigns={this.getCampaigns}
+          />
+          <UpdateCampaignModal
+            updateCampaignModal={this.state.updateCampaignModal}
+            closeModalUpdate={this.handleCloseModalUpdate}
+            getCampaigns={this.getCampaigns}
+            selectedItem={this.state.selectedItem}
           />
           <div className={classes.heroContent}>
             <div className={classes.root}>
@@ -211,14 +250,7 @@ class Campaigns extends React.Component {
                     expanded={campaign.expanded}
                     onChange={this.handleExpand(campaign)}
                   >
-                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                      <Typography className={classes.heading}>
-                        <Button
-                          onClick={() => this.deleteCampaign(campaign.id)}
-                        >
-                          <DeleteIcon />
-                        </Button>
-                      </Typography>
+                    <FlexExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                       <Typography className={classes.heading}>
                         <FontAwesomeIcon icon={["fab", campaign.icon]} />
                       </Typography>
@@ -227,10 +259,25 @@ class Campaigns extends React.Component {
                       </Typography>
                       <Typography className={classes.thirdHeading}>
                         <FontAwesomeIcon icon={faCalendar} />
-                        {"  "}
                         {this.formatDateTime(campaign.created)}
                       </Typography>
-                    </ExpansionPanelSummary>
+                      <Typography>
+                        <Button
+                          onClick={e =>
+                            this.handleClickOpenModalUpdate(campaign)
+                          }
+                        >
+                          <EditIcon />
+                        </Button>
+                      </Typography>
+                      <Typography>
+                        <Button
+                          onClick={() => this.deleteCampaign(campaign.id)}
+                        >
+                          <DeleteIcon />
+                        </Button>
+                      </Typography>
+                    </FlexExpansionPanelSummary>
                     <ExpansionPanelDetails>
                       <Typography>
                         Nulla facilisi. Phasellus sollicitudin nulla et quam

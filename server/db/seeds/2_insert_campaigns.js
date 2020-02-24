@@ -15,6 +15,12 @@ exports.seed = function(knex) {
           title: "Angular",
           color: "Red",
           icon: "angular"
+        },
+        {
+          id: 3,
+          title: "Java",
+          color: "yellow",
+          icon: "java"
         }
       ]);
     });
