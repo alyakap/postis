@@ -45,7 +45,7 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
         <div>
           <Dialog
             open
-            onClose={() => this.props.handleToggleModal()}
+            onClose={() => this.props.toggle()}
             aria-labelledby="form-dialog-title"
           >
             <DialogContent>
