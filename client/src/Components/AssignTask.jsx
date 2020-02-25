@@ -95,7 +95,7 @@ class AssignTask extends React.Component {
           ) : (
             <Select
               native
-              value={this.state.assignedUser}
+              value={this.state.assignedUser ? this.state.assignedUser : ""}
               onChange={this.handleChange("id")}
             >
               <option value="">Select an user</option>

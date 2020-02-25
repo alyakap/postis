@@ -1,10 +1,15 @@
 const knex = require("../../db");
 
 const getTasks = async () =>
+  await knex("tasks")
+    .leftJoin("users", "users.id", "tasks.assigned_user")
+    .leftJoin("campaigns", "campaigns.id", "tasks.campaigns_id")
+    .select("tasks.*", "users.firstname", "campaigns.title as campaigntitle");
+const getTasksByCampaignId = async campaigns_id =>
   await knex
     .select("*")
     .from("tasks")
-    .orderBy("created", "desc");
+    .where({ campaigns_id });
 const getTaskById = async id =>
   await knex
     .select("*")
@@ -75,7 +80,8 @@ module.exports = {
   deleteTask,
   getTaskById,
   editTask,
-  assignTask
+  assignTask,
+  getTasksByCampaignId
   // getTask,
   // getUserTask,
   // updateTask

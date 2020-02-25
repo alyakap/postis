@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 
 import AddCampaign from "./AddCampaign";
+import Tasks from "./Tasks";
 import { withStyles } from "@material-ui/core/styles";
 import {
   ExpansionPanel,
@@ -261,11 +262,7 @@ class Campaigns extends React.Component {
                       </Typography>
                     </FlexExpansionPanelSummary>
                     <ExpansionPanelDetails>
-                      <Typography>
-                        Nulla facilisi. Phasellus sollicitudin nulla et quam
-                        mattis feugiat. Aliquam eget maximus est, id dignissim
-                        quam.
-                      </Typography>
+                      {campaign.expanded && <Tasks campaignId={campaign.id} />}
                     </ExpansionPanelDetails>
                   </ExpansionPanel>
                 );

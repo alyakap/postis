@@ -4,7 +4,8 @@ const {
   deleteTask,
   getTaskById,
   editTask,
-  assignTask
+  assignTask,
+  getTasksByCampaignId
 } = require("./queries");
 
 const handleGetTasksList = async (req, res) => {
@@ -12,6 +13,9 @@ const handleGetTasksList = async (req, res) => {
 };
 const handlePostTask = async (req, res) => {
   res.send(await postTask(req.body));
+};
+const handleGetTasksByCampaignId = async (req, res) => {
+  res.send(await getTasksByCampaignId(parseInt(req.params.id)));
 };
 const handleDeleteTask = async (req, res) => {
   const tasks = await deleteTask(parseInt(req.params.id));
@@ -62,7 +66,8 @@ module.exports = {
   handleDeleteTask,
   handleGetTaskById,
   handleEditTask,
-  handleAssignTask
+  handleAssignTask,
+  handleGetTasksByCampaignId
   // handleGetSpecificTask,
   // handleGetUserTask,
   // handleUpdateTask

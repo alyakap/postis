@@ -89,7 +89,7 @@ class EditTask extends React.Component {
             type="text"
             autoComplete="Title"
             autoFocus
-            val={this.state.request.data.title}
+            value={this.state.request.data.title || ""}
             onChange={this.handleChange("title")}
           />
           <TextField
@@ -99,7 +99,7 @@ class EditTask extends React.Component {
             label="Description"
             type="text"
             id="description"
-            val={this.state.description}
+            value={this.state.description || ""}
             onChange={this.handleChange("description")}
           />
         </form>

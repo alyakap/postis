@@ -6,11 +6,13 @@ const {
   handleDeleteTask,
   handleGetTaskById,
   handleEditTask,
-  handleAssignTask
+  handleAssignTask,
+  handleGetTasksByCampaignId
   //  handleGetSpecificTask, handleGetUserTask, handlePostTask, handleDeleteTask, handleUpdateTask
 } = require("./handlers");
 
 tasksRouter.get("/", handleGetTasksList);
+tasksRouter.get("/fromcampaign/:id", handleGetTasksByCampaignId);
 tasksRouter.get("/:id", handleGetTaskById);
 tasksRouter.post("/", handlePostTask);
 tasksRouter.delete("/:id", handleDeleteTask);

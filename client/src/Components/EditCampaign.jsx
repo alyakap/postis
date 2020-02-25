@@ -89,7 +89,7 @@ class EditCampaign extends React.Component {
             type="text"
             autoComplete="Title"
             autoFocus
-            val={this.state.request.data.title}
+            value={this.state.request.data.title || ""}
             onChange={this.handleChange("title")}
           />
           <TextField
@@ -99,14 +99,14 @@ class EditCampaign extends React.Component {
             label="Color"
             type="text"
             id="color"
-            val={this.state.request.data.color}
+            value={this.state.request.data.color || ""}
             onChange={this.handleChange("color")}
           />
           <FormControl style={{ width: "100%", marginTop: "16px" }}>
             <InputLabel htmlFor="outlined-age-native-simple">Icon</InputLabel>
             <Select
               native
-              val={this.state.request.data.icon}
+              value={this.state.request.data.icon || ""}
               onChange={this.handleChange("icon")}
               inputProps={{
                 name: "age",

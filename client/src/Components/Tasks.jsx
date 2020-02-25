@@ -33,10 +33,10 @@ const styles = theme => ({
   root: {
     width: "100%"
   },
-  heroContent: {
-    //backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6)
-  },
+  // heroContent: {
+  //   //backgroundColor: theme.palette.background.paper,
+  //   padding: theme.spacing(8, 0, 6)
+  // },
 
   container: {
     paddingTop: theme.spacing(1),
@@ -82,8 +82,14 @@ class Tasks extends Component {
     this.getTasks();
   }
   getTasks = () => {
+    const {
+      props: { campaignId }
+    } = this;
+    const url = campaignId
+      ? `http://localhost:4567/tasks/fromcampaign/${campaignId}`
+      : `http://localhost:4567/tasks`;
     axios
-      .get(`http://localhost:4567/tasks`)
+      .get(url)
       .then(response => {
         if (response.data) {
           this.setState({
@@ -193,82 +199,87 @@ class Tasks extends Component {
 
         <div className={classes.heroContent}>
           <div className={classes.root}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center"
-              }}
-            >
-              <Typography
-                component="h1"
-                variant="h2"
-                align="left"
-                color="textPrimary"
-                gutterBottom
+            {!this.props.campaignId && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center"
+                }}
               >
-                Tasks
-              </Typography>
-              <Fab
-                className={classes.primary}
-                onClick={this.handleToggleModalAddTask}
-                aria-label="add"
-              >
-                <AddIcon />
-              </Fab>
-            </div>
-
-            <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Remove</TableCell>
-                    <TableCell align="left">Title</TableCell>
-                    <TableCell align="right"></TableCell>
-                    <TableCell align="right">Assign to User</TableCell>
-                    <TableCell align="right">
-                      <FontAwesomeIcon icon={faCalendar} />
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {this.state.tasks.data.map(task => (
-                    <TableRow key={task.id}>
-                      <TableCell component="th" scope="row">
-                        <Button onClick={() => this.deleteTask(task.id)}>
-                          <DeleteIcon />
-                        </Button>
-                      </TableCell>
-                      <TableCell align="left">{task.title}</TableCell>
+                <Typography
+                  component="h1"
+                  variant="h2"
+                  align="left"
+                  color="textPrimary"
+                  gutterBottom
+                >
+                  Tasks
+                </Typography>
+                <Fab
+                  className={classes.primary}
+                  onClick={this.handleToggleModalAddTask}
+                  aria-label="add"
+                >
+                  <AddIcon />
+                </Fab>
+              </div>
+            )}
+            {this.state.tasks.data.length >= 1 && (
+              <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Remove</TableCell>
+                      <TableCell align="left">Title</TableCell>
+                      <TableCell align="right"></TableCell>
+                      <TableCell align="right">Assign to User</TableCell>
                       <TableCell align="right">
-                        <Button
-                          onClick={e => this.handleToggleModalEditTask(task.id)}
-                        >
-                          <EditIcon />
-                        </Button>
-                      </TableCell>
-                      <TableCell align="right">
-                        <Button
-                          onClick={e =>
-                            this.handleToggleModalAssignTask(
-                              task.id,
-                              task.title,
-                              task.assigned_user
-                            )
-                          }
-                        >
-                          <AssignmentIndIcon />
-                          {task.assigned_user}
-                        </Button>
-                      </TableCell>
-                      <TableCell align="right">
-                        {this.formatDateTime(task.created)}
+                        <FontAwesomeIcon icon={faCalendar} />
                       </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                  </TableHead>
+                  <TableBody>
+                    {this.state.tasks.data.map(task => (
+                      <TableRow key={task.id}>
+                        <TableCell component="th" scope="row">
+                          <Button onClick={() => this.deleteTask(task.id)}>
+                            <DeleteIcon />
+                          </Button>
+                        </TableCell>
+                        <TableCell align="left">{task.title}</TableCell>
+                        <TableCell align="right">
+                          <Button
+                            onClick={e =>
+                              this.handleToggleModalEditTask(task.id)
+                            }
+                          >
+                            <EditIcon />
+                          </Button>
+                        </TableCell>
+                        <TableCell align="right">
+                          <Button
+                            onClick={e =>
+                              this.handleToggleModalAssignTask(
+                                task.id,
+                                task.title,
+                                task.assigned_user
+                              )
+                            }
+                          >
+                            <AssignmentIndIcon />
+                            {task.firstname}
+                          </Button>
+                        </TableCell>
+                        <TableCell align="right">
+                          {this.formatDateTime(task.created)}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
           </div>
         </div>
       </Container>
