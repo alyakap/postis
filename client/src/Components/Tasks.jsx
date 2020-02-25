@@ -233,7 +233,7 @@ class Tasks extends Component {
                       <TableCell>Remove</TableCell>
                       <TableCell align="left">Title</TableCell>
                       <TableCell align="right"></TableCell>
-                      <TableCell align="right">Assign to User</TableCell>
+                      <TableCell align="right">Assigned User</TableCell>
                       <TableCell align="right">
                         <FontAwesomeIcon icon={faCalendar} />
                       </TableCell>
@@ -268,6 +268,7 @@ class Tasks extends Component {
                             }
                           >
                             <AssignmentIndIcon />
+                            &nbsp;
                             {task.firstname}
                           </Button>
                         </TableCell>
