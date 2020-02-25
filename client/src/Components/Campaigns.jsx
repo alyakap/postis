@@ -3,10 +3,13 @@ import axios from "axios";
 
 import AddCampaign from "./AddCampaign";
 import { withStyles } from "@material-ui/core/styles";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import Typography from "@material-ui/core/Typography";
+import {
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  Typography
+} from "@material-ui/core";
+
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Container } from "@material-ui/core";
@@ -148,13 +151,13 @@ class Campaigns extends React.Component {
       (date.getMonth() + 1)
     );
   };
-  handleToggleModalAddCampaign = () => {
+  handleToggleModalAddCampaigns = () => {
     this.setState({
       ...this.state,
       addCampaignModal: !this.state.addCampaignModal
     });
   };
-  handleToggleModalUpdateCampaign = id => {
+  handleToggleModalEditCampaign = id => {
     this.setState({
       ...this.state,
       selectedId: id,
@@ -176,7 +179,6 @@ class Campaigns extends React.Component {
 
   render() {
     const { classes } = this.props;
-
     return this.state.campaigns.loading ? (
       <ColorLinearProgress className={classes.margin} />
     ) : (
@@ -184,16 +186,16 @@ class Campaigns extends React.Component {
         <Container maxWidth="lg" className={classes.container}>
           {this.state.addCampaignModal && (
             <AddCampaign
-              toggle={this.handleToggleModalAddCampaign}
-              getCampaigns={this.getCampaigns}
+              toggle={this.handleToggleModalAddCampaigns}
+              getItems={this.getCampaigns}
             />
           )}
 
           {this.state.updateCampaignModal && (
             <EditCampaign
-              toggle={this.handleToggleModalUpdateCampaign}
-              getCampaigns={this.getCampaigns}
+              toggle={this.handleToggleModalEditCampaign}
               id={this.state.selectedId}
+              getItems={this.getCampaigns}
             />
           )}
           <div className={classes.heroContent}>
@@ -216,7 +218,7 @@ class Campaigns extends React.Component {
                 </Typography>
                 <Fab
                   className={classes.primary}
-                  onClick={this.handleToggleModalAddCampaign}
+                  onClick={this.handleToggleModalAddCampaigns}
                   aria-label="add"
                 >
                   <AddIcon />
@@ -244,7 +246,7 @@ class Campaigns extends React.Component {
                       <Typography>
                         <Button
                           onClick={e =>
-                            this.handleToggleModalUpdateCampaign(campaign.id)
+                            this.handleToggleModalEditCampaign(campaign.id)
                           }
                         >
                           <EditIcon />

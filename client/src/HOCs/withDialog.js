@@ -8,6 +8,7 @@ import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import EditIcon from "@material-ui/icons/Edit";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
+import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 const styles = theme => ({
   paper: {
     marginTop: theme.spacing(1),
@@ -42,10 +43,9 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
       const { classes } = this.props;
       return (
         <div>
-          <p>this is the enhanced content</p>
           <Dialog
             open
-            onClose={() => this.props.handleToggleModalAddCampaign()}
+            onClose={() => this.props.handleToggleModal()}
             aria-labelledby="form-dialog-title"
           >
             <DialogContent>
@@ -53,11 +53,15 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
                 <Avatar className={classes.avatar}>
                   {settingsObject.icon === "add" && <AddToPhotosIcon />}
                   {settingsObject.icon === "edit" && <EditIcon />}
+                  {settingsObject.icon === "assign" && <AssignmentIndIcon />}
                 </Avatar>
                 <Typography component="h1" variant="h5">
                   {settingsObject.title}
                 </Typography>
-                <WrappedComponent passStateUp={this.passStateUp} />
+                <WrappedComponent
+                  passStateUp={this.passStateUp}
+                  {...this.props}
+                />
               </div>
             </DialogContent>
             <DialogActions>
@@ -69,9 +73,8 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
                   settingsObject
                     .submit(this.state)
                     .then(resp => {
-                      console.log(resp);
                       this.props.toggle();
-                      this.props.getCampaigns();
+                      this.props.getItems();
                     })
                     .catch(err => {
                       console.log(err);

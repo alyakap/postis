@@ -4,8 +4,12 @@ import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddIcon from "@material-ui/icons/Add";
 import AddTask from "./AddTask";
+import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Button from "@material-ui/core/Button";
+import EditIcon from "@material-ui/icons/Edit";
+import EditTask from "./EditTask";
+import AssignTask from "./AssignTask";
 
 import {
   withStyles,
@@ -59,7 +63,12 @@ class Tasks extends Component {
         error: false,
         data: []
       },
-      addTaskModal: false
+      selectedId: "",
+      selectedTitle: "",
+      selectedAssignedUser: "",
+      addTaskModal: false,
+      editTaskModal: false,
+      assignTaskModal: false
     };
   }
   componentDidMount() {
@@ -118,18 +127,29 @@ class Tasks extends Component {
       (date.getMonth() + 1)
     );
   };
-  handleClickOpenModal = () => {
+  handleToggleModalAddTask = () => {
     this.setState({
       ...this.state,
-      addTaskModal: true
+      addTaskModal: !this.state.addTaskModal
     });
   };
-  handleCloseModal = () => {
+  handleToggleModalEditTask = id => {
     this.setState({
       ...this.state,
-      addTaskModal: false
+      selectedId: id,
+      editTaskModal: !this.state.editTaskModal
     });
   };
+  handleToggleModalAssignTask = (id, title, assigned_user) => {
+    this.setState({
+      ...this.state,
+      selectedId: id,
+      selectedTitle: title,
+      selectedAssignedUser: assigned_user,
+      assignTaskModal: !this.state.assignTaskModal
+    });
+  };
+
   deleteTask = id => {
     const refresh = this.getTasks;
     axios
@@ -148,11 +168,29 @@ class Tasks extends Component {
       <ColorLinearProgress className={classes.margin} />
     ) : (
       <Container maxWidth="lg" className={classes.container}>
-        <AddTask
-          addTaskModal={this.state.addTaskModal}
-          closeModal={this.handleCloseModal}
-          getTasks={this.getTasks}
-        />
+        {this.state.addTaskModal && (
+          <AddTask
+            toggle={this.handleToggleModalAddTask}
+            getItems={this.getTasks}
+          />
+        )}
+        {this.state.editTaskModal && (
+          <EditTask
+            toggle={this.handleToggleModalEditTask}
+            getItems={this.getTasks}
+            id={this.state.selectedId}
+          />
+        )}
+        {this.state.assignTaskModal && (
+          <AssignTask
+            toggle={this.handleToggleModalAssignTask}
+            getItems={this.getTasks}
+            id={this.state.selectedId}
+            title={this.state.selectedTitle}
+            assigned_user={this.state.selectedAssignedUser}
+          />
+        )}
+
         <div className={classes.heroContent}>
           <div className={classes.root}>
             <div
@@ -173,7 +211,7 @@ class Tasks extends Component {
               </Typography>
               <Fab
                 className={classes.primary}
-                onClick={this.handleClickOpenModal}
+                onClick={this.handleToggleModalAddTask}
                 aria-label="add"
               >
                 <AddIcon />
@@ -186,7 +224,8 @@ class Tasks extends Component {
                   <TableRow>
                     <TableCell>Remove</TableCell>
                     <TableCell align="left">Title</TableCell>
-                    <TableCell align="right">Created by</TableCell>
+                    <TableCell align="right"></TableCell>
+                    <TableCell align="right">Assign to User</TableCell>
                     <TableCell align="right">
                       <FontAwesomeIcon icon={faCalendar} />
                     </TableCell>
@@ -201,7 +240,27 @@ class Tasks extends Component {
                         </Button>
                       </TableCell>
                       <TableCell align="left">{task.title}</TableCell>
-                      <TableCell align="right">{task.created_user}</TableCell>
+                      <TableCell align="right">
+                        <Button
+                          onClick={e => this.handleToggleModalEditTask(task.id)}
+                        >
+                          <EditIcon />
+                        </Button>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Button
+                          onClick={e =>
+                            this.handleToggleModalAssignTask(
+                              task.id,
+                              task.title,
+                              task.assigned_user
+                            )
+                          }
+                        >
+                          <AssignmentIndIcon />
+                          {task.assigned_user}
+                        </Button>
+                      </TableCell>
                       <TableCell align="right">
                         {this.formatDateTime(task.created)}
                       </TableCell>

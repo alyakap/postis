@@ -1,12 +1,28 @@
 const knex = require("../../db");
 
-const getTasks = async () => await knex.select("*").from("tasks");
+const getTasks = async () =>
+  await knex
+    .select("*")
+    .from("tasks")
+    .orderBy("created", "desc");
+const getTaskById = async id =>
+  await knex
+    .select("*")
+    .from("tasks")
+    .where({ id });
 const postTask = async data => await knex("tasks").insert(data);
 const deleteTask = async id =>
   await knex("tasks")
     .where({ id })
     .delete();
-
+const editTask = async (id, data) =>
+  await knex("tasks")
+    .where({ id })
+    .update(data);
+const assignTask = async (id, data) =>
+  await knex("tasks")
+    .where({ id })
+    .update({ assigned_user: data });
 // const deleteTask = async id => await knex("tasks").where(222).delete();
 // is not the same as
 
@@ -56,7 +72,10 @@ const deleteTask = async id =>
 module.exports = {
   getTasks,
   postTask,
-  deleteTask
+  deleteTask,
+  getTaskById,
+  editTask,
+  assignTask
   // getTask,
   // getUserTask,
   // updateTask

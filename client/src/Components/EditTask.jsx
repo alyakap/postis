@@ -1,10 +1,10 @@
 import React from "react";
 
-import { TextField, InputLabel, FormControl, Select } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import axios from "axios";
 import withDialog from "../HOCs/withDialog";
 
-class EditCampaign extends React.Component {
+class EditTask extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +18,7 @@ class EditCampaign extends React.Component {
   }
   static submit = data => {
     return axios.put(
-      `http://localhost:4567/campaigns/${data.id}`,
+      `http://localhost:4567/tasks/${data.id}`,
       data.request.data
     );
   };
@@ -33,7 +33,7 @@ class EditCampaign extends React.Component {
       }
     });
     axios
-      .get(`http://localhost:4567/campaigns/${this.state.id}`)
+      .get(`http://localhost:4567/tasks/${this.state.id}`)
       .then(response => {
         this.setState({
           ...this.state,
@@ -83,7 +83,7 @@ class EditCampaign extends React.Component {
             margin="normal"
             required
             fullWidth
-            id="campaign"
+            id="tasks"
             label="Title"
             name="Title"
             type="text"
@@ -95,40 +95,20 @@ class EditCampaign extends React.Component {
           <TextField
             margin="normal"
             fullWidth
-            name="color"
-            label="Color"
+            name="description"
+            label="Description"
             type="text"
-            id="color"
-            val={this.state.request.data.color}
-            onChange={this.handleChange("color")}
+            id="description"
+            val={this.state.description}
+            onChange={this.handleChange("description")}
           />
-          <FormControl style={{ width: "100%", marginTop: "16px" }}>
-            <InputLabel htmlFor="outlined-age-native-simple">Icon</InputLabel>
-            <Select
-              native
-              val={this.state.request.data.icon}
-              onChange={this.handleChange("icon")}
-              inputProps={{
-                name: "age",
-                id: "outlined-age-native-simple"
-              }}
-            >
-              <option value="" />
-              <option value="js">Js</option>
-              <option value="react">React</option>
-              <option value="angular">Angular</option>
-              <option value="java">Java</option>
-              <option value="aws">aws</option>
-              <option value="git">git</option>
-            </Select>
-          </FormControl>
         </form>
       </>
     );
   }
 }
 export default withDialog({
-  title: "Edit Campaign",
+  title: "Edit Task",
   icon: "edit",
-  submit: EditCampaign.submit
-})(EditCampaign);
+  submit: EditTask.submit
+})(EditTask);

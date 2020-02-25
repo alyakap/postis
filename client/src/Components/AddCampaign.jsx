@@ -1,9 +1,6 @@
 import React from "react";
 
-import TextField from "@material-ui/core/TextField";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+import { TextField, InputLabel, FormControl, Select } from "@material-ui/core";
 import axios from "axios";
 import withDialog from "../HOCs/withDialog";
 
