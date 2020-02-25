@@ -45,6 +45,8 @@ class AddTask extends React.Component {
             name="description"
             label="Description"
             type="text"
+            multiline
+            rows="4"
             id="description"
             val={this.state.description}
             onChange={this.handleChange("description")}

@@ -31,6 +31,7 @@ class AddCampaign extends React.Component {
             margin="normal"
             required
             fullWidth
+            style={{ backgroundColor: "white" }}
             id="campaign"
             label="Title"
             name="Title"

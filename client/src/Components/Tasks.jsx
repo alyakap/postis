@@ -232,6 +232,7 @@ class Tasks extends Component {
                     <TableRow>
                       <TableCell>Remove</TableCell>
                       <TableCell align="left">Title</TableCell>
+                      <TableCell align="right">Campaign</TableCell>
                       <TableCell align="right"></TableCell>
                       <TableCell align="right">Assigned User</TableCell>
                       <TableCell align="right">
@@ -248,6 +249,9 @@ class Tasks extends Component {
                           </Button>
                         </TableCell>
                         <TableCell align="left">{task.title}</TableCell>
+                        <TableCell align="right">
+                          {task.campaigntitle}
+                        </TableCell>
                         <TableCell align="right">
                           <Button
                             onClick={e =>

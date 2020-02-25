@@ -86,8 +86,22 @@ class AssignTask extends React.Component {
   render() {
     return (
       <>
-        <Typography align="center" color="textPrimary" gutterBottom>
-          {this.props.title} assign to:
+        <Typography
+          style={{ marginTop: "15px", color: "#4db6ac" }}
+          align="center"
+          variant="h6"
+          color="textPrimary"
+          gutterBottom
+        >
+          '{this.props.title}'
+        </Typography>
+        <Typography
+          style={{ marginTop: "15px" }}
+          align="center"
+          color="textPrimary"
+          gutterBottom
+        >
+          assign to:
         </Typography>
         <form noValidate>
           {this.state.users.loading ? (

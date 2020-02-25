@@ -138,6 +138,8 @@ class EditTask extends React.Component {
             name="description"
             label="Description"
             type="text"
+            multiline
+            rows="4"
             id="description"
             value={this.state.request.data.description || ""}
             onChange={this.handleChange("description")}
