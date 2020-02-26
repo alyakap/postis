@@ -4,7 +4,8 @@ const getTasks = async () =>
   await knex("tasks")
     .leftJoin("users", "users.id", "tasks.assigned_user")
     .leftJoin("campaigns", "campaigns.id", "tasks.campaigns_id")
-    .select("tasks.*", "users.firstname", "campaigns.title as campaigntitle");
+    .select("tasks.*", "users.firstname", "campaigns.title as campaigntitle")
+    .orderBy("created", "desc");
 const getTasksByCampaignId = async campaigns_id =>
   await knex
     .select("*")

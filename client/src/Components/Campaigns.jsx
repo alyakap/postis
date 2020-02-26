@@ -231,6 +231,7 @@ class Campaigns extends React.Component {
                       <Typography className={classes.heading}>
                         <FontAwesomeIcon icon={["fab", campaign.icon]} />
                       </Typography>
+                      &nbsp;
                       <Typography className={classes.secondaryHeading}>
                         {campaign.title}
                       </Typography>

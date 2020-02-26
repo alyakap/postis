@@ -41,7 +41,7 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
     };
     render() {
       const { classes } = this.props;
-      console.log(this.state);
+
       return (
         <div>
           <Dialog
