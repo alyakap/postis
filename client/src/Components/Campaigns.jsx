@@ -222,6 +222,7 @@ class Campaigns extends React.Component {
               {this.state.campaigns.data.map(campaign => {
                 return (
                   <ExpansionPanel
+                    style={{ backgroundColor: `${campaign.color}` }}
                     key={campaign.id}
                     expanded={campaign.expanded}
                     onChange={this.handleExpand(campaign)}

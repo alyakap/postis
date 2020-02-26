@@ -41,16 +41,22 @@ class AddCampaign extends React.Component {
             val={this.state.title}
             onChange={this.handleChange("title")}
           />
-          <TextField
-            margin="normal"
-            fullWidth
-            name="color"
-            label="Color"
-            type="text"
-            id="color"
-            val={this.state.color}
-            onChange={this.handleChange("color")}
-          />
+
+          <FormControl style={{ width: "100%", marginTop: "16px" }}>
+            <InputLabel htmlFor="outlined-age-native-simple">Color</InputLabel>
+            <Select
+              native
+              val={this.state.color || "#F3FAF1"}
+              onChange={this.handleChange("color")}
+            >
+              <option value="" />
+              <option value="#FFDDDD">Red</option>
+              <option value="#FFFFCF">Yellow</option>
+              <option value="#EAEBFF">Purple</option>
+              <option value="#D9FFDF">Green</option>
+              <option value="#D9FFFF">Blue</option>
+            </Select>
+          </FormControl>
           <FormControl style={{ width: "100%", marginTop: "16px" }}>
             <InputLabel htmlFor="outlined-age-native-simple">Icon</InputLabel>
             <Select

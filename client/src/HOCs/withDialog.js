@@ -41,6 +41,7 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
     };
     render() {
       const { classes } = this.props;
+      console.log(this.state);
       return (
         <div>
           <Dialog
@@ -70,16 +71,21 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
               </Button>
               <Button
                 onClick={() => {
-                  settingsObject
-                    .submit(this.state)
-                    .then(resp => {
-                      this.props.toggle();
-                      this.props.getItems();
-                    })
-                    .catch(err => {
-                      console.log(err);
-                      this.props.toggle();
-                    });
+                  if (Object.entries(this.state).length === 0) {
+                    this.props.toggle();
+                    this.props.getItems();
+                  } else {
+                    settingsObject
+                      .submit(this.state)
+                      .then(resp => {
+                        this.props.toggle();
+                        this.props.getItems();
+                      })
+                      .catch(err => {
+                        console.log(err);
+                        this.props.toggle();
+                      });
+                  }
                 }}
                 color="primary"
               >
