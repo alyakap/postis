@@ -11,6 +11,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import EditTask from "./EditTask";
 import AssignTask from "./AssignTask";
 import dateFormat from "dateformat";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import { Link } from "react-router-dom";
 
 import {
   withStyles,
@@ -148,6 +150,9 @@ class Tasks extends Component {
       assignTaskModal: !this.state.assignTaskModal
     });
   };
+  handleSeeDetails = id => {
+    console.log(id);
+  };
 
   deleteTask = id => {
     const refresh = this.getTasks;
@@ -223,7 +228,7 @@ class Tasks extends Component {
                 <Table className={classes.table} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Remove</TableCell>
+                      <TableCell>Details</TableCell>
                       <TableCell align="left">Title</TableCell>
                       <TableCell align="right">Campaign</TableCell>
                       <TableCell align="right"></TableCell>
@@ -237,9 +242,11 @@ class Tasks extends Component {
                     {this.state.tasks.data.map(task => (
                       <TableRow key={task.id}>
                         <TableCell component="th" scope="row">
-                          <Button onClick={() => this.deleteTask(task.id)}>
-                            <DeleteIcon />
-                          </Button>
+                          <Link to={`/task/${task.id}`}>
+                            <Button>
+                              <VisibilityIcon />
+                            </Button>
+                          </Link>
                         </TableCell>
                         <TableCell align="left">{task.title}</TableCell>
                         <TableCell align="right">
@@ -252,6 +259,9 @@ class Tasks extends Component {
                             }
                           >
                             <EditIcon />
+                          </Button>
+                          <Button onClick={() => this.deleteTask(task.id)}>
+                            <DeleteIcon />
                           </Button>
                         </TableCell>
                         <TableCell align="right">
