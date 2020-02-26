@@ -10,6 +10,7 @@ import Button from "@material-ui/core/Button";
 import EditIcon from "@material-ui/icons/Edit";
 import EditTask from "./EditTask";
 import AssignTask from "./AssignTask";
+import dateFormat from "dateformat";
 
 import {
   withStyles,
@@ -123,15 +124,7 @@ class Tasks extends Component {
   };
   formatDateTime = tasTime => {
     var date = new Date(tasTime);
-    return (
-      date.getHours() +
-      ":" +
-      date.getUTCHours() +
-      "   " +
-      date.getDate() +
-      "/" +
-      (date.getMonth() + 1)
-    );
+    return dateFormat(date, "mmm d, h:MM");
   };
   handleToggleModalAddTask = () => {
     this.setState({

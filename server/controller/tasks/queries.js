@@ -11,10 +11,19 @@ const getTasksByCampaignId = async campaigns_id =>
     .from("tasks")
     .where({ campaigns_id });
 const getTaskById = async id =>
-  await knex
-    .select("*")
-    .from("tasks")
-    .where({ id });
+  await knex("tasks")
+    .leftJoin("users as AU", "AU.id", "tasks.assigned_user")
+    .leftJoin("users as CU", "CU.id", "tasks.created_user")
+    .leftJoin("users as UU", "UU.id", "tasks.updated_user")
+    .leftJoin("campaigns", "campaigns.id", "tasks.campaigns_id")
+    .select(
+      "tasks.*",
+      "AU.firstname as assigned_firstname",
+      "CU.firstname as created_firstname",
+      "UU.firstname as updated_firstname",
+      "campaigns.title as campaigntitle"
+    )
+    .where({ "tasks.id": id });
 const postTask = async data => await knex("tasks").insert(data);
 const deleteTask = async id =>
   await knex("tasks")

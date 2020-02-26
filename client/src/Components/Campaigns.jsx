@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import dateFormat from "dateformat";
 
 import AddCampaign from "./AddCampaign";
 import Tasks from "./Tasks";
@@ -142,15 +143,7 @@ class Campaigns extends React.Component {
   };
   formatDateTime = camTime => {
     var date = new Date(camTime);
-    return (
-      date.getHours() +
-      ":" +
-      date.getUTCHours() +
-      "   " +
-      date.getDate() +
-      "/" +
-      (date.getMonth() + 1)
-    );
+    return dateFormat(date, "mmm d, h:MM");
   };
   handleToggleModalAddCampaigns = () => {
     this.setState({
@@ -242,6 +235,7 @@ class Campaigns extends React.Component {
                       </Typography>
                       <Typography className={classes.thirdHeading}>
                         <FontAwesomeIcon icon={faCalendar} />
+                        &nbsp;
                         {this.formatDateTime(campaign.created)}
                       </Typography>
                       <Typography>
