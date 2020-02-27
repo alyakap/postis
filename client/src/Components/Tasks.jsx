@@ -145,20 +145,16 @@ class Tasks extends Component {
       assignTaskModal: !this.state.assignTaskModal
     });
   };
-  handleSeeDetails = id => {
-    console.log(id);
-  };
 
   deleteTask = id => {
     const refresh = this.getTasks;
     axios
       .delete(`http://localhost:4567/tasks/${id}`, { id })
       .then(function(response) {
-        console.log(response.data);
         refresh();
       })
       .catch(function(error) {
-        console.log(error);
+        throw error;
       });
   };
   render() {

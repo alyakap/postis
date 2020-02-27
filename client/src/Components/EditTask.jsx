@@ -29,7 +29,6 @@ class EditTask extends React.Component {
     };
   }
   static submit = data => {
-    console.log(data.id);
     return axios.put(`http://localhost:4567/tasks/${data.id}`, data);
   };
 
@@ -41,7 +40,6 @@ class EditTask extends React.Component {
     axios
       .get(`http://localhost:4567/tasks/${this.state.id}`)
       .then(response => {
-        console.log(response.data[0]);
         this.setState({
           ...this.state,
           loading: false,
@@ -126,7 +124,6 @@ class EditTask extends React.Component {
     );
   };
   render() {
-    console.log("to ben send data", this.state.toBeSend);
     return (
       <>
         <form noValidate>
