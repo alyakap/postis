@@ -5,7 +5,8 @@ exports.up = function(knex) {
     tbl
       .foreign("campaigns_id")
       .references("id")
-      .inTable("campaigns");
+      .inTable("campaigns")
+      .onDelete("CASCADE");
     tbl.string("title", 200);
     tbl.text("description");
     tbl.timestamp("notification").nullable();

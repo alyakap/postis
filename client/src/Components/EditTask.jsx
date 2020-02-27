@@ -23,7 +23,6 @@ class EditTask extends React.Component {
     };
   }
   static submit = data => {
-    console.log("data from submit", data.request.data);
     return axios.put(
       `http://localhost:4567/tasks/${data.id}`,
       data.request.data
@@ -116,6 +115,7 @@ class EditTask extends React.Component {
     };
   };
   render() {
+    console.log(this.state.campaigns.data);
     return (
       <>
         <form noValidate>

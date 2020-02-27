@@ -36,11 +36,6 @@ const styles = theme => ({
   root: {
     width: "100%"
   },
-  // heroContent: {
-  //   //backgroundColor: theme.palette.background.paper,
-  //   padding: theme.spacing(8, 0, 6)
-  // },
-
   container: {
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(4)
@@ -227,6 +222,14 @@ class Tasks extends Component {
             {this.state.tasks.data.length >= 1 && (
               <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
+                  <colgroup>
+                    <col style={{ width: "5%" }} />
+                    <col style={{ width: "35%" }} />
+                    <col style={{ width: "5%" }} />
+                    <col style={{ width: "15%" }} />
+                    <col style={{ width: "15%" }} />
+                    <col style={{ width: "15%" }} />
+                  </colgroup>
                   <TableHead>
                     <TableRow>
                       <TableCell>Details</TableCell>
