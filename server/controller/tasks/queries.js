@@ -11,7 +11,7 @@ const getTasksByCampaignId = async campaigns_id =>
     .select("*")
     .from("tasks")
     .where({ campaigns_id });
-const getTaskById = async id =>
+const getTaskByIdExtra = async id =>
   await knex("tasks")
     .leftJoin("users as AU", "AU.id", "tasks.assigned_user")
     .leftJoin("users as CU", "CU.id", "tasks.created_user")
@@ -25,6 +25,12 @@ const getTaskById = async id =>
       "campaigns.title as campaigntitle"
     )
     .where({ "tasks.id": id });
+
+// const getTaskById = async id =>
+//   await knex
+//     .select("*")
+//     .from("tasks")
+//     .where({ id });
 const postTask = async data => await knex("tasks").insert(data);
 const deleteTask = async id =>
   await knex("tasks")
@@ -88,10 +94,11 @@ module.exports = {
   getTasks,
   postTask,
   deleteTask,
-  getTaskById,
+  //getTaskById,
   editTask,
   assignTask,
-  getTasksByCampaignId
+  getTasksByCampaignId,
+  getTaskByIdExtra
   // getTask,
   // getUserTask,
   // updateTask

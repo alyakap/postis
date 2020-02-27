@@ -4,16 +4,22 @@ import { TextField } from "@material-ui/core";
 import { InputLabel, FormControl, Select } from "@material-ui/core";
 import axios from "axios";
 import withDialog from "../HOCs/withDialog";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 class EditTask extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       id: props.id,
-      request: {
-        data: {},
-        error: false,
-        loading: false
+      error: false,
+      loading: false,
+      toBeSend: {
+        id: "",
+        title: "",
+        description: "",
+        campaigns_id: "",
+        complete: false
       },
       campaigns: {
         data: [],
@@ -23,42 +29,36 @@ class EditTask extends React.Component {
     };
   }
   static submit = data => {
-    return axios.put(
-      `http://localhost:4567/tasks/${data.id}`,
-      data.request.data
-    );
+    console.log(data.id);
+    return axios.put(`http://localhost:4567/tasks/${data.id}`, data);
   };
 
   componentDidMount = () => {
     this.setState({
       ...this.state,
-      request: {
-        data: {},
-        error: false,
-        loading: true
-      }
+      loading: true
     });
     axios
       .get(`http://localhost:4567/tasks/${this.state.id}`)
       .then(response => {
+        console.log(response.data[0]);
         this.setState({
           ...this.state,
-
-          request: {
-            data: response.data[0],
-            error: false,
-            loading: false
+          loading: false,
+          toBeSend: {
+            id: response.data[0].id,
+            title: response.data[0].title,
+            description: response.data[0].description,
+            campaigns_id: response.data[0].campaigns_id,
+            complete: response.data[0].complete
           }
         });
       })
       .catch(error => {
         this.setState({
           ...this.state,
-          request: {
-            data: {},
-            error: true,
-            loading: false
-          }
+          error: true,
+          loading: false
         });
       });
     this.getCampaigns();
@@ -100,22 +100,33 @@ class EditTask extends React.Component {
       this.setState(
         {
           ...this.state,
-          request: {
-            ...this.state.request,
-            data: {
-              ...this.state.request.data,
-              [field]: e.target.value
-            }
+          toBeSend: {
+            ...this.state.toBeSend,
+            [field]: e.target.value
           }
         },
         () => {
-          this.props.passStateUp(this.state);
+          this.props.passStateUp(this.state.toBeSend);
         }
       );
     };
   };
+  handleChangeCheckedBox = e => {
+    this.setState(
+      {
+        ...this.state,
+        toBeSend: {
+          ...this.state.toBeSend,
+          complete: !this.state.toBeSend.complete
+        }
+      },
+      () => {
+        this.props.passStateUp(this.state.toBeSend);
+      }
+    );
+  };
   render() {
-    console.log(this.state.campaigns.data);
+    console.log("to ben send data", this.state.toBeSend);
     return (
       <>
         <form noValidate>
@@ -129,7 +140,7 @@ class EditTask extends React.Component {
             type="text"
             autoComplete="Title"
             autoFocus
-            value={this.state.request.data.title || ""}
+            value={this.state.toBeSend.title || ""}
             onChange={this.handleChange("title")}
           />
           <TextField
@@ -141,7 +152,7 @@ class EditTask extends React.Component {
             multiline
             rows="4"
             id="description"
-            value={this.state.request.data.description || ""}
+            value={this.state.toBeSend.description || ""}
             onChange={this.handleChange("description")}
           />
           <FormControl style={{ width: "100%", marginTop: "16px" }}>
@@ -150,7 +161,7 @@ class EditTask extends React.Component {
             </InputLabel>
             <Select
               native
-              value={this.state.request.data.campaigns_id || ""}
+              value={this.state.toBeSend.campaigns_id || ""}
               onChange={this.handleChange("campaigns_id")}
             >
               <option value="" />
@@ -161,6 +172,15 @@ class EditTask extends React.Component {
               ))}
             </Select>
           </FormControl>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={this.state.toBeSend.complete || false}
+                onChange={this.handleChangeCheckedBox}
+              />
+            }
+            label="Completed"
+          />
         </form>
       </>
     );

@@ -94,18 +94,20 @@ class EditCampaign extends React.Component {
           />
 
           <FormControl style={{ width: "100%", marginTop: "16px" }}>
-            <InputLabel htmlFor="outlined-age-native-simple">Color</InputLabel>
+            <InputLabel htmlFor="outlined-age-native-simple">
+              Indicate priority with color
+            </InputLabel>
             <Select
               native
               value={this.state.request.data.color || "#F3FAF1"}
               onChange={this.handleChange("color")}
             >
               <option value="" />
-              <option value="#FFDDDD">Red</option>
-              <option value="#FFFFCF">Yellow</option>
-              <option value="#EAEBFF">Purple</option>
-              <option value="#D9FFDF">Green</option>
-              <option value="#D9FFFF">Blue</option>
+              <option value="#FFDDDD">Red-Urgent</option>
+              <option value="#FFFFCF">Yellow-High</option>
+              <option value="#EAEBFF">Purple-Medium</option>
+              <option value="#D9FFDF">Green-Low</option>
+              <option value="#D9FFFF">Blue-Very low</option>
             </Select>
           </FormControl>
           <FormControl style={{ width: "100%", marginTop: "16px" }}>

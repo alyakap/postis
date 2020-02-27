@@ -4,7 +4,7 @@ const getCampaigns = async () =>
   await knex
     .select("*")
     .from("campaigns")
-    .orderBy("created", "desc");
+    .orderBy("created", "asc");
 const getCampaignById = async id =>
   await knex
     .select("*")
