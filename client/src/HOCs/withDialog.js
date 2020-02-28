@@ -9,6 +9,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 const styles = theme => ({
   paper: {
     marginTop: theme.spacing(1),
@@ -41,7 +42,7 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
     };
     render() {
       const { classes } = this.props;
-
+      console.log(this.state);
       return (
         <div>
           <Dialog
@@ -55,6 +56,7 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
                   {settingsObject.icon === "add" && <AddToPhotosIcon />}
                   {settingsObject.icon === "edit" && <EditIcon />}
                   {settingsObject.icon === "assign" && <AssignmentIndIcon />}
+                  {settingsObject.icon === "delete" && <DeleteForeverIcon />}
                 </Avatar>
                 <Typography component="h1" variant="h5">
                   {settingsObject.title}

@@ -23,6 +23,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Button from "@material-ui/core/Button";
 import EditIcon from "@material-ui/icons/Edit";
 import EditCampaign from "./EditCampaign";
+import DeleteCampaign from "./DeleteCampaign";
 
 const styles = theme => ({
   root: {
@@ -80,8 +81,10 @@ class Campaigns extends React.Component {
         data: []
       },
       selectedId: "",
+      selectedTitle: "",
       addCampaignModal: false,
-      updateCampaignModal: false
+      updateCampaignModal: false,
+      deleteCampaignModal: false
     };
   }
 
@@ -158,17 +161,14 @@ class Campaigns extends React.Component {
       updateCampaignModal: !this.state.updateCampaignModal
     });
   };
-
-  deleteCampaign = id => {
-    const refresh = this.getCampaigns;
-    axios
-      .delete(`http://localhost:4567/campaigns/${id}`, { id })
-      .then(function(response) {
-        refresh();
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+  handleToggleModalDeleteCampaign = obj => {
+    console.log("obj", obj && obj.id);
+    this.setState({
+      ...this.state,
+      selectedId: obj && obj.id,
+      selectedTitle: obj && obj.title,
+      deleteCampaignModal: !this.state.deleteCampaignModal
+    });
   };
 
   render() {
@@ -189,6 +189,14 @@ class Campaigns extends React.Component {
             <EditCampaign
               toggle={this.handleToggleModalEditCampaign}
               id={this.state.selectedId}
+              getItems={this.getCampaigns}
+            />
+          )}
+          {this.state.deleteCampaignModal && (
+            <DeleteCampaign
+              toggle={this.handleToggleModalDeleteCampaign}
+              id={this.state.selectedId}
+              title={this.state.selectedTitle}
               getItems={this.getCampaigns}
             />
           )}
@@ -251,7 +259,12 @@ class Campaigns extends React.Component {
                       </Typography>
                       <Typography>
                         <Button
-                          onClick={() => this.deleteCampaign(campaign.id)}
+                          onClick={e =>
+                            this.handleToggleModalDeleteCampaign({
+                              id: campaign.id,
+                              title: campaign.title
+                            })
+                          }
                         >
                           <DeleteIcon />
                         </Button>
