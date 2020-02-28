@@ -162,7 +162,6 @@ class Campaigns extends React.Component {
     });
   };
   handleToggleModalDeleteCampaign = obj => {
-    console.log("obj", obj && obj.id);
     this.setState({
       ...this.state,
       selectedId: obj && obj.id,

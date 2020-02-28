@@ -22,7 +22,6 @@ const styles = theme => ({
     backgroundColor: "#4DB6AC"
   },
   form: {
-    // Fix IE 11 issue.
     marginTop: theme.spacing(1)
   },
   submit: {
@@ -42,7 +41,7 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
     };
     render() {
       const { classes } = this.props;
-      console.log(this.state);
+
       return (
         <div>
           <Dialog
