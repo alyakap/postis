@@ -13,6 +13,7 @@ import AssignTask from "./AssignTask";
 import dateFormat from "dateformat";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { Link } from "react-router-dom";
+import Chip from "@material-ui/core/Chip";
 
 import {
   withStyles,
@@ -274,9 +275,21 @@ class Tasks extends Component {
                               )
                             }
                           >
-                            <AssignmentIndIcon />
-                            &nbsp;
-                            {task.firstname}
+                            <Chip
+                              onClick={e =>
+                                this.handleToggleModalAssignTask(
+                                  task.id,
+                                  task.title,
+                                  task.assigned_user
+                                )
+                              }
+                              style={{ backgroundColor: "#4DB6AC" }}
+                              size="medium"
+                              icon={<AssignmentIndIcon />}
+                              label={task.firstname}
+                              clickable
+                              color="primary"
+                            />
                           </Button>
                         </TableCell>
                         <TableCell align="right">
