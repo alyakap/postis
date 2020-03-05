@@ -34,9 +34,9 @@ const styles = theme => ({
       marginRight: "auto"
     }
   },
-  disabled: {
-    color: "black !important"
-  },
+  // disabled: {
+  //   color: "black !important"
+  // },
   paper: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
