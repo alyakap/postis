@@ -22,11 +22,12 @@ class AddTask extends React.Component {
       }
     };
   }
-  static submit = data => axios.post("http://localhost:4567/tasks", data);
+  static submit = data =>
+    axios.post(`${process.env.REACT_APP_API_URL}/tasks`, data);
 
   componentDidMount = () => {
     axios
-      .get(`http://localhost:4567/campaigns`)
+      .get(`${process.env.REACT_APP_API_URL}/campaigns`)
       .then(response => {
         if (response.data) {
           this.setState({

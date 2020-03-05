@@ -29,7 +29,6 @@ import {
   Fab,
   LinearProgress
 } from "@material-ui/core";
-
 const styles = theme => ({
   table: {
     minWidth: 650
@@ -85,8 +84,8 @@ class Tasks extends Component {
       props: { campaignId }
     } = this;
     const url = campaignId
-      ? `http://localhost:4567/tasks/fromcampaign/${campaignId}`
-      : `http://localhost:4567/tasks`;
+      ? `${process.env.REACT_APP_API_URL}/tasks/fromcampaign/${campaignId}`
+      : `${process.env.REACT_APP_API_URL}/tasks`;
     axios
       .get(url)
       .then(response => {
@@ -150,7 +149,7 @@ class Tasks extends Component {
   deleteTask = id => {
     const refresh = this.getTasks;
     axios
-      .delete(`http://localhost:4567/tasks/${id}`, { id })
+      .delete(`${process.env.REACT_APP_API_URL}/tasks/${id}`, { id })
       .then(function(response) {
         refresh();
       })
@@ -254,16 +253,7 @@ class Tasks extends Component {
                           {task.campaigntitle}
                         </TableCell>
                         <TableCell align="right">
-                          <Button
-                            onClick={e =>
-                              this.handleToggleModalEditTask(task.id)
-                            }
-                          >
-                            <EditIcon />
-                          </Button>
-                          <Button onClick={() => this.deleteTask(task.id)}>
-                            <DeleteIcon />
-                          </Button>
+                          {this.formatDateTime(task.created)}
                         </TableCell>
                         <TableCell align="right">
                           <Button
@@ -293,7 +283,16 @@ class Tasks extends Component {
                           </Button>
                         </TableCell>
                         <TableCell align="right">
-                          {this.formatDateTime(task.created)}
+                          <Button
+                            onClick={e =>
+                              this.handleToggleModalEditTask(task.id)
+                            }
+                          >
+                            <EditIcon />
+                          </Button>
+                          <Button onClick={() => this.deleteTask(task.id)}>
+                            <DeleteIcon />
+                          </Button>
                         </TableCell>
                       </TableRow>
                     ))}

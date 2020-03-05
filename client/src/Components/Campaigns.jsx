@@ -99,7 +99,7 @@ class Campaigns extends React.Component {
 
   getCampaigns = () => {
     axios
-      .get(`http://localhost:4567/campaigns`)
+      .get(`${process.env.REACT_APP_API_URL}/campaigns`)
       .then(response => {
         if (response.data) {
           const newData = response.data.map(campaign => {

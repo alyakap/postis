@@ -29,7 +29,7 @@ class EditTask extends React.Component {
     };
   }
   static submit = data => {
-    return axios.put(`http://localhost:4567/tasks/${data.id}`, data);
+    return axios.put(`${process.env.REACT_APP_API_URL}/tasks/${data.id}`, data);
   };
 
   componentDidMount = () => {
@@ -38,7 +38,7 @@ class EditTask extends React.Component {
       loading: true
     });
     axios
-      .get(`http://localhost:4567/tasks/${this.state.id}`)
+      .get(`${process.env.REACT_APP_API_URL}/tasks/${this.state.id}`)
       .then(response => {
         this.setState({
           ...this.state,
@@ -63,7 +63,7 @@ class EditTask extends React.Component {
   };
   getCampaigns = () => {
     axios
-      .get(`http://localhost:4567/campaigns`)
+      .get(`${process.env.REACT_APP_API_URL}/campaigns`)
       .then(response => {
         if (response.data) {
           this.setState({

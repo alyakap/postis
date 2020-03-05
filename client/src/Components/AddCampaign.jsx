@@ -13,7 +13,8 @@ class AddCampaign extends React.Component {
       icon: ""
     };
   }
-  static submit = data => axios.post("http://localhost:4567/campaigns", data);
+  static submit = data =>
+    axios.post(`${process.env.REACT_APP_API_URL}/campaigns`, data);
   handleChange = field => {
     return e => {
       const newState = { ...this.state };

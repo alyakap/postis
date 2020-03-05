@@ -18,9 +18,12 @@ class AssignTask extends React.Component {
     };
   }
   static submit = data => {
-    return axios.put(`http://localhost:4567/tasks/${data.taskId}/assign`, {
-      id: parseInt(data.assigned_user)
-    });
+    return axios.put(
+      `${process.env.REACT_APP_API_URL}/tasks/${data.taskId}/assign`,
+      {
+        id: parseInt(data.assigned_user)
+      }
+    );
   };
 
   componentDidMount = () => {
@@ -32,7 +35,7 @@ class AssignTask extends React.Component {
       }
     });
     axios
-      .get(`http://localhost:4567/users`)
+      .get(`${process.env.REACT_APP_API_URL}/users`)
       .then(response => {
         if (response.data) {
           this.setState({
