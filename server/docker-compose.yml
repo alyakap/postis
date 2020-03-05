@@ -7,9 +7,13 @@ services:
       - 5433:5432
     env_file:
       - .env
+    volumes:
+      - postis:/var/lib/postgresql/data
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+volumes:
+  postis:
