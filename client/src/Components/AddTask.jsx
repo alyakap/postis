@@ -22,12 +22,11 @@ class AddTask extends React.Component {
       }
     };
   }
-  static submit = data =>
-    axios.post(`${process.env.REACT_APP_API_URL}/tasks`, data);
+  static submit = data => axios.post("http://localhost:4567/tasks", data);
 
   componentDidMount = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/campaigns`)
+      .get(`http://localhost:4567/campaigns`)
       .then(response => {
         if (response.data) {
           this.setState({
@@ -79,50 +78,50 @@ class AddTask extends React.Component {
   render() {
     return (
       <>
-        <form noValidate>
-          <TextField
-            margin="normal"
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="tasks"
+          label="Title"
+          name="Title"
+          type="text"
+          autoComplete="Title"
+          autoFocus
+          val={this.state.request.title}
+          onChange={this.handleChange("title")}
+        />
+        <TextField
+          required
+          margin="normal"
+          fullWidth
+          name="description"
+          label="Description"
+          type="text"
+          multiline
+          rows="4"
+          id="description"
+          val={this.state.request.description}
+          onChange={this.handleChange("description")}
+        />
+        <FormControl style={{ width: "100%", marginTop: "16px" }}>
+          <InputLabel htmlFor="outlined-age-native-simple">
+            Belongs to Campaign
+          </InputLabel>
+          <Select
             required
-            fullWidth
-            id="tasks"
-            label="Title"
-            name="Title"
-            type="text"
-            autoComplete="Title"
-            autoFocus
-            val={this.state.request.title}
-            onChange={this.handleChange("title")}
-          />
-          <TextField
-            margin="normal"
-            fullWidth
-            name="description"
-            label="Description"
-            type="text"
-            multiline
-            rows="4"
-            id="description"
-            val={this.state.request.description}
-            onChange={this.handleChange("description")}
-          />
-          <FormControl style={{ width: "100%", marginTop: "16px" }}>
-            <InputLabel htmlFor="outlined-age-native-simple">
-              Belongs to Campaign
-            </InputLabel>
-            <Select
-              native
-              value={this.state.request.campaigns_id || ""}
-              onChange={this.handleChange("campaigns_id")}
-            >
-              <option value="" />
-              {this.state.campaigns.data.map(campaign => (
-                <option value={campaign.id} key={campaign.id}>
-                  {campaign.title}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-        </form>
+            native
+            value={this.state.request.campaigns_id || ""}
+            onChange={this.handleChange("campaigns_id")}
+          >
+            <option value="" />
+            {this.state.campaigns.data.map(campaign => (
+              <option value={campaign.id} key={campaign.id}>
+                {campaign.title}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
       </>
     );
   }

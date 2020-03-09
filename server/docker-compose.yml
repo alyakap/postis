@@ -6,9 +6,17 @@ services:
     ports:
       - 5433:5432
     env_file:
-      - .env
+      - .env.development
     volumes:
       - postis:/var/lib/postgresql/data
+  dbtest:
+    image: postgres:11-alpine
+    ports:
+      - 5434:5432
+    env_file:
+      - .env.test
+    volumes:
+      - postisDbTest:/var/lib/postgresql/data
 
   adminer:
     image: adminer
@@ -17,3 +25,4 @@ services:
       - 8080:8080
 volumes:
   postis:
+  postisDbTest:

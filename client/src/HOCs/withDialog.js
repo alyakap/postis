@@ -22,7 +22,8 @@ const styles = theme => ({
     backgroundColor: "#4DB6AC"
   },
   form: {
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
+    width: "30rem"
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
@@ -39,6 +40,19 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
         ...passedState
       });
     };
+    handleSubmit = e => {
+      e.preventDefault();
+      settingsObject
+        .submit(this.state)
+        .then(resp => {
+          this.props.toggle();
+          this.props.getItems();
+        })
+        .catch(err => {
+          console.log(err);
+          this.props.toggle();
+        });
+    };
     render() {
       const { classes } = this.props;
 
@@ -49,50 +63,37 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
             onClose={() => this.props.toggle()}
             aria-labelledby="form-dialog-title"
           >
-            <DialogContent>
-              <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                  {settingsObject.icon === "add" && <AddToPhotosIcon />}
-                  {settingsObject.icon === "edit" && <EditIcon />}
-                  {settingsObject.icon === "assign" && <AssignmentIndIcon />}
-                  {settingsObject.icon === "delete" && <DeleteForeverIcon />}
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                  {settingsObject.title}
-                </Typography>
-                <WrappedComponent
-                  passStateUp={this.passStateUp}
-                  {...this.props}
-                />
-              </div>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={() => this.props.toggle()} color="primary">
-                Cancel
-              </Button>
-              <Button
-                onClick={() => {
-                  if (Object.entries(this.state).length === 0) {
-                    this.props.toggle();
-                    this.props.getItems();
-                  } else {
-                    settingsObject
-                      .submit(this.state)
-                      .then(resp => {
-                        this.props.toggle();
-                        this.props.getItems();
-                      })
-                      .catch(err => {
-                        console.log(err);
-                        this.props.toggle();
-                      });
-                  }
-                }}
-                color="primary"
-              >
-                Okay
-              </Button>
-            </DialogActions>
+            <form
+              id="myform"
+              onSubmit={this.handleSubmit}
+              className={classes.form}
+            >
+              <DialogContent>
+                <div className={classes.paper}>
+                  <Avatar className={classes.avatar}>
+                    {settingsObject.icon === "add" && <AddToPhotosIcon />}
+                    {settingsObject.icon === "edit" && <EditIcon />}
+                    {settingsObject.icon === "assign" && <AssignmentIndIcon />}
+                    {settingsObject.icon === "delete" && <DeleteForeverIcon />}
+                  </Avatar>
+                  <Typography component="h1" variant="h5">
+                    {settingsObject.title}
+                  </Typography>
+                  <WrappedComponent
+                    passStateUp={this.passStateUp}
+                    {...this.props}
+                  />
+                </div>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={() => this.props.toggle()} color="primary">
+                  Cancel
+                </Button>
+                <Button type="submit" form="myform" color="primary">
+                  Okay
+                </Button>
+              </DialogActions>
+            </form>
           </Dialog>
         </div>
       );

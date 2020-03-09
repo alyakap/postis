@@ -29,7 +29,7 @@ class EditTask extends React.Component {
     };
   }
   static submit = data => {
-    return axios.put(`${process.env.REACT_APP_API_URL}/tasks/${data.id}`, data);
+    return axios.put(`http://localhost:4567/tasks/${data.id}`, data);
   };
 
   componentDidMount = () => {
@@ -38,7 +38,7 @@ class EditTask extends React.Component {
       loading: true
     });
     axios
-      .get(`${process.env.REACT_APP_API_URL}/tasks/${this.state.id}`)
+      .get(`http://localhost:4567/tasks/${this.state.id}`)
       .then(response => {
         this.setState({
           ...this.state,
@@ -63,7 +63,7 @@ class EditTask extends React.Component {
   };
   getCampaigns = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/campaigns`)
+      .get(`http://localhost:4567/campaigns`)
       .then(response => {
         if (response.data) {
           this.setState({
@@ -126,59 +126,59 @@ class EditTask extends React.Component {
   render() {
     return (
       <>
-        <form noValidate>
-          <TextField
-            margin="normal"
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="tasks"
+          label="Title"
+          name="Title"
+          type="text"
+          autoComplete="Title"
+          autoFocus
+          value={this.state.toBeSend.title || ""}
+          onChange={this.handleChange("title")}
+        />
+        <TextField
+          margin="normal"
+          fullWidth
+          required
+          name="description"
+          label="Description"
+          type="text"
+          multiline
+          rows="4"
+          id="description"
+          value={this.state.toBeSend.description || ""}
+          onChange={this.handleChange("description")}
+        />
+        <FormControl style={{ width: "100%", marginTop: "16px" }}>
+          <InputLabel htmlFor="outlined-age-native-simple">
+            Belongs to Campaign
+          </InputLabel>
+          <Select
+            native
             required
-            fullWidth
-            id="tasks"
-            label="Title"
-            name="Title"
-            type="text"
-            autoComplete="Title"
-            autoFocus
-            value={this.state.toBeSend.title || ""}
-            onChange={this.handleChange("title")}
-          />
-          <TextField
-            margin="normal"
-            fullWidth
-            name="description"
-            label="Description"
-            type="text"
-            multiline
-            rows="4"
-            id="description"
-            value={this.state.toBeSend.description || ""}
-            onChange={this.handleChange("description")}
-          />
-          <FormControl style={{ width: "100%", marginTop: "16px" }}>
-            <InputLabel htmlFor="outlined-age-native-simple">
-              Belongs to Campaign
-            </InputLabel>
-            <Select
-              native
-              value={this.state.toBeSend.campaigns_id || ""}
-              onChange={this.handleChange("campaigns_id")}
-            >
-              <option value="" />
-              {this.state.campaigns.data.map(campaign => (
-                <option value={campaign.id} key={campaign.id}>
-                  {campaign.title}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={this.state.toBeSend.complete || false}
-                onChange={this.handleChangeCheckedBox}
-              />
-            }
-            label="Completed"
-          />
-        </form>
+            value={this.state.toBeSend.campaigns_id || ""}
+            onChange={this.handleChange("campaigns_id")}
+          >
+            <option value="" />
+            {this.state.campaigns.data.map(campaign => (
+              <option value={campaign.id} key={campaign.id}>
+                {campaign.title}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={this.state.toBeSend.complete || false}
+              onChange={this.handleChangeCheckedBox}
+            />
+          }
+          label="Completed"
+        />
       </>
     );
   }

@@ -1,21 +1,22 @@
 //requiring express and middlewares
-require("dotenv").config();
+require("dotenv").config({
+  path: ".env." + (process.env.NODE_ENV || "development")
+});
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const mainRouter = require("./controller");
 
 //start server
-const port = 4567;
+
 const app = express();
-app.listen(port, () => {
-  console.log(`Server is listening on port:${port}...`);
-});
 
 //setting up middlewares
+if (process.env.NODE_ENV !== "test") {
+  app.use(morgan("tiny"));
+}
 
 // add logs on the server's terminal
-app.use(morgan("tiny"));
 
 // add cors support
 app.use(cors());
@@ -27,3 +28,4 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 mainRouter(app); // require('./controller')(app)
+module.exports = app;
