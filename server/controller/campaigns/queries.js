@@ -11,7 +11,10 @@ const getCampaignById = async id =>
     .from("campaigns")
     .where({ id });
 
-const postCampaign = async data => await knex("campaigns").insert(data);
+const postCampaign = async data =>
+  await knex("campaigns")
+    .insert(data)
+    .returning("*");
 const deleteCampaign = async id =>
   await knex("campaigns")
     .where({ id })

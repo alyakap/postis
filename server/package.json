@@ -16,7 +16,8 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
-    "jest": "^25.1.0"
+    "jest": "^25.1.0",
+    "supertest": "^4.0.2"
   },
   "scripts": {
     "test": "cross-env NODE_ENV=test jest",
@@ -24,8 +25,8 @@
     "db": "docker-compose up -d",
     "start": "npm run db && npm run server",
     "stop": "docker-compose down",
-    "migrate-dev": "cross-env NODE_ENV=development knex migrate:latest -- env development",
-    "migrate-dev": "cross-env NODE_ENV=test knex migrate:latest -- env test",
+    "migrate-dev": "cross-env NODE_ENV=dev knex migrate:latest -- env dev",
+    "migrate-test": "cross-env NODE_ENV=test knex migrate:latest -- env test",
     "seed-dev": "cross-env NODE_ENV=development knex seed:run -- env development",
     "seed-test": "cross-env NODE_ENV=test knex seed:run -- env test"
   },
