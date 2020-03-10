@@ -5,8 +5,7 @@ const {
   getTaskById,
   editTask,
   assignTask,
-  getTasksByCampaignId,
-  getTaskByIdExtra
+  getTasksByCampaignId
 } = require("./queries");
 
 const handleGetTasksList = async (req, res) => {
@@ -22,11 +21,8 @@ const handleDeleteTask = async (req, res) => {
   const tasks = await deleteTask(parseInt(req.params.id));
   res.json(tasks);
 };
-// const handleGetTaskById = async (req, res) => {
-//   res.send(await getTaskById(parseInt(req.params.id)));
-// };
 const handleGetTaskByIdExtraFields = async (req, res) => {
-  res.send(await getTaskByIdExtra(parseInt(req.params.id)));
+  res.send(await getTaskById(parseInt(req.params.id)));
 };
 const handleEditTask = async (req, res) => {
   const tasks = await editTask(parseInt(req.params.id), req.body);

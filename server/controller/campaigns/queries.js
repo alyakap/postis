@@ -22,7 +22,8 @@ const deleteCampaign = async id =>
 const updateCampaign = async (id, data) =>
   await knex("campaigns")
     .where({ id })
-    .update(data);
+    .update(data)
+    .returning("*");
 module.exports = {
   getCampaignById,
   getCampaigns,
