@@ -26,7 +26,10 @@ const getTaskById = async id =>
     )
     .where({ "tasks.id": id });
 
-const postTask = async data => await knex("tasks").insert(data);
+const postTask = async data =>
+  await knex("tasks")
+    .insert(data)
+    .returning("*");
 const deleteTask = async id =>
   await knex("tasks")
     .where({ id })
@@ -34,11 +37,14 @@ const deleteTask = async id =>
 const editTask = async (id, data) =>
   await knex("tasks")
     .where({ id })
-    .update(data);
+    .update(data)
+    .returning("*");
 const assignTask = async (id, data) =>
   await knex("tasks")
     .where({ id })
-    .update({ assigned_user: data });
+    .update({ assigned_user: data })
+    .returning("*");
+
 // const deleteTask = async id => await knex("tasks").where(222).delete();
 // is not the same as
 

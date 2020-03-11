@@ -3,17 +3,34 @@ var app = require("../app");
 var supertest = require("supertest");
 var knex = require("../db");
 
-beforeEach(() => {
-  return knex.migrate
-    .rollback()
-    .then(() => knex.migrate.latest())
-    .then(() => knex.seed.run());
+beforeEach(done => {
+  //this.timeout(60 * 1000);
+  knex.migrate.rollback().then(() => {
+    knex.migrate.latest().then(() => {
+      return knex.seed.run().then(() => {
+        done();
+      });
+    });
+  });
 });
-
+beforeEach(done => {
+  //this.timeout(60 * 1000);
+  knex.migrate.rollback().then(() => {
+    knex.migrate.latest().then(() => {
+      return knex.seed.run().then(() => {
+        done();
+      });
+    });
+  });
+});
 afterEach(() => {
   return knex.migrate.rollback();
 });
-
+afterEach(done => {
+  knex.migrate.rollback().then(() => {
+    done();
+  });
+});
 describe("/campaigns", () => {
   test("GET /campaigns returns correct fields", async () => {
     const result = await supertest(app).get("/campaigns");
@@ -75,9 +92,7 @@ describe("/campaigns", () => {
     const result = await supertest(app).delete("/campaigns/6");
     expect(result.statusCode).toBe(200);
   });
-  afterAll(async done => {
-    // Closing the DB connection allows Jest to exit successfully.
-    await knex.destroy();
-    done();
+  afterAll(function() {
+    return knex.destroy();
   });
 });
