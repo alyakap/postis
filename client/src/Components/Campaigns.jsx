@@ -237,7 +237,7 @@ class Campaigns extends React.Component {
                     <FlexExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                       <Typography className={classes.heading}>
                         <span
-                          style={{ color: "#6C7B95" }}
+                          style={{ fontSize: "18px" }}
                           className={campaign.icon}
                         ></span>
                       </Typography>

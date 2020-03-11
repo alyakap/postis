@@ -1,5 +1,5 @@
 import React from "react";
-
+import IconPicker from "./IconPicker";
 import { TextField, InputLabel, FormControl, Select } from "@material-ui/core";
 import axios from "axios";
 import withDialog from "../HOCs/withDialog";
@@ -9,6 +9,7 @@ class EditCampaign extends React.Component {
     super(props);
     this.state = {
       id: props.id,
+      iconPicker: false,
       request: {
         data: {},
         error: false,
@@ -75,58 +76,71 @@ class EditCampaign extends React.Component {
       );
     };
   };
+  handleOpenIconPicker = () => {
+    this.setState({
+      ...this.state,
+      iconPicker: !this.state.iconPicker
+    });
+  };
+  handleChangeIcon = icon => {
+    this.setState(
+      {
+        iconPicker: !this.state.iconPicker,
+        request: {
+          ...this.state.request,
+          data: {
+            ...this.state.request.data,
+            icon: icon
+          }
+        }
+      },
+      () => {
+        this.props.passStateUp(this.state);
+      }
+    );
+  };
   render() {
     return (
       <>
-        <form noValidate>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="campaign"
-            label="Title"
-            name="Title"
-            type="text"
-            autoComplete="Title"
-            autoFocus
-            value={this.state.request.data.title || ""}
-            onChange={this.handleChange("title")}
-          />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="campaign"
+          label="Title"
+          name="Title"
+          type="text"
+          autoComplete="Title"
+          autoFocus
+          value={this.state.request.data.title || ""}
+          onChange={this.handleChange("title")}
+        />
 
-          <FormControl style={{ width: "100%", marginTop: "16px" }}>
-            <InputLabel htmlFor="outlined-age-native-simple">
-              Indicate priority with color
-            </InputLabel>
-            <Select
-              native
-              value={this.state.request.data.color || "#F3FAF1"}
-              onChange={this.handleChange("color")}
-            >
-              <option value="" />
-              <option value="#FFDDDD">Red-Urgent</option>
-              <option value="#FFFFCF">Yellow-High</option>
-              <option value="#EAEBFF">Purple-Medium</option>
-              <option value="#D9FFDF">Green-Low</option>
-              <option value="#D9FFFF">Blue-Very low</option>
-            </Select>
-          </FormControl>
-          <FormControl style={{ width: "100%", marginTop: "16px" }}>
-            <InputLabel htmlFor="outlined-age-native-simple">Icon</InputLabel>
-            <Select
-              native
-              value={this.state.request.data.icon || ""}
-              onChange={this.handleChange("icon")}
-            >
-              <option value="" />
-              <option value="js">Js</option>
-              <option value="react">React</option>
-              <option value="angular">Angular</option>
-              <option value="java">Java</option>
-              <option value="aws">aws</option>
-              <option value="git">git</option>
-            </Select>
-          </FormControl>
-        </form>
+        <FormControl
+          style={{ width: "100%", marginTop: "16px", marginBottom: "16px" }}
+        >
+          <InputLabel htmlFor="outlined-age-native-simple">
+            Indicate priority with color
+          </InputLabel>
+          <Select
+            native
+            value={this.state.request.data.color || "#F3FAF1"}
+            onChange={this.handleChange("color")}
+          >
+            <option value="" />
+            <option value="#FFDDDD">Red-Urgent</option>
+            <option value="#FFFFCF">Yellow-High</option>
+            <option value="#EAEBFF">Purple-Medium</option>
+            <option value="#D9FFDF">Green-Low</option>
+            <option value="#D9FFFF">Blue-Very low</option>
+          </Select>
+          <IconPicker
+            handleChangeIcon={this.handleChangeIcon}
+            selectedIcon={this.state.request.data.icon}
+            iconPickerModal={this.state.iconPicker}
+            handleOpenIconPicker={this.handleOpenIconPicker}
+          ></IconPicker>
+        </FormControl>
       </>
     );
   }
