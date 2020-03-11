@@ -2,10 +2,11 @@ process.env.NODE_ENV = "test";
 var app = require("../app");
 var supertest = require("supertest");
 var knex = require("../db");
-
+knex.migrate.forceFreeMigrationsLock();
 beforeEach(done => {
-  //this.timeout(60 * 1000);
+  knex.migrate.forceFreeMigrationsLock();
   knex.migrate.rollback().then(() => {
+    knex.migrate.forceFreeMigrationsLock();
     knex.migrate.latest().then(() => {
       return knex.seed.run().then(() => {
         done();
@@ -13,24 +14,15 @@ beforeEach(done => {
     });
   });
 });
-beforeEach(done => {
-  //this.timeout(60 * 1000);
-  knex.migrate.rollback().then(() => {
-    knex.migrate.latest().then(() => {
-      return knex.seed.run().then(() => {
-        done();
-      });
-    });
-  });
-});
-afterEach(() => {
-  return knex.migrate.rollback();
-});
+// afterEach(() => {
+//   return knex.migrate.rollback();
+// });
 afterEach(done => {
   knex.migrate.rollback().then(() => {
     done();
   });
 });
+
 describe("/campaigns", () => {
   test("GET /campaigns returns correct fields", async () => {
     const result = await supertest(app).get("/campaigns");
