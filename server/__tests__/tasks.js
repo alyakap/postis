@@ -4,10 +4,9 @@ var supertest = require("supertest");
 var knex = require("../db");
 knex.migrate.forceFreeMigrationsLock();
 describe("/tasks", () => {
-  knex.migrate.forceFreeMigrationsLock();
+  //knex.migrate.forceFreeMigrationsLock();
   beforeEach(done => {
     knex.migrate.rollback().then(() => {
-      knex.migrate.forceFreeMigrationsLock();
       knex.migrate.latest().then(() => {
         return knex.seed.run().then(() => {
           done();
