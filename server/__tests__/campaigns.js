@@ -3,23 +3,23 @@ var app = require("../app");
 var supertest = require("supertest");
 var knex = require("../db");
 
-beforeEach(done => {
-  knex.migrate.rollback().then(() => {
-    knex.migrate.latest().then(() => {
-      return knex.seed.run().then(() => {
-        done();
-      });
-    });
-  });
-});
-// afterEach(() => {
-//   return knex.migrate.rollback();
+// beforeEach(done => {
+//   knex.migrate.rollback().then(() => {
+//     knex.migrate.latest().then(() => {
+//       return knex.seed.run().then(() => {
+//         done();
+//       });
+//     });
+//   });
 // });
-afterEach(done => {
-  knex.migrate.rollback().then(() => {
-    done();
-  });
-});
+// // afterEach(() => {
+// //   return knex.migrate.rollback();
+// // });
+// afterEach(done => {
+//   knex.migrate.rollback().then(() => {
+//     done();
+//   });
+// });
 
 describe("/campaigns", () => {
   test("GET /campaigns returns correct fields", async () => {

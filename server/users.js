@@ -2,23 +2,20 @@ process.env.NODE_ENV = "test";
 var app = require("../app");
 var supertest = require("supertest");
 var knex = require("../db");
-knex.migrate.forceFreeMigrationsLock();
+// knex.migrate.forceFreeMigrationsLock();
 describe("/users", () => {
-  beforeEach(done => {
-    knex.migrate.rollback().then(() => {
-      knex.migrate.latest().then(() => {
-        return knex.seed.run().then(() => {
-          done();
-        });
-      });
-    });
-  });
+  // beforeEach(done => {
+  //   knex.migrate
+  //     .rollback()
+  //     .then(() => knex.migrate.latest())
+  //     .then(() => knex.seed.run());
+  // });
 
-  afterEach(done => {
-    knex.migrate.rollback().then(() => {
-      done();
-    });
-  });
+  // afterEach(done => {
+  //   knex.migrate.rollback().then(() => {
+  //     done();
+  //   });
+  // });
   test("GET /users returns correct fields", async () => {
     const result = await supertest(app).get("/users");
     expect(result.statusCode).toBe(200);

@@ -7,27 +7,27 @@ exports.seed = function(knex) {
         {
           title: "Aws",
           color: "#FFDDDD",
-          icon: "aws"
+          icon: "fas fa-rocket"
         },
         {
           title: "Angular",
           color: "#FFDDDD",
-          icon: "angular"
+          icon: "fas fa-flag"
         },
         {
           title: "Java",
           color: "#FFFFCF",
-          icon: "java"
+          icon: "fas fa-bullhorn"
         },
         {
           title: "Javascript",
           color: "#D9FFDF",
-          icon: "js"
+          icon: "far fa-bell"
         },
         {
           title: "React",
           color: "#D9FFFF",
-          icon: "react"
+          icon: "fab fa-linkedin-in"
         }
       ]);
     });

@@ -236,7 +236,10 @@ class Campaigns extends React.Component {
                   >
                     <FlexExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                       <Typography className={classes.heading}>
-                        <FontAwesomeIcon icon={["fab", campaign.icon]} />
+                        <span
+                          style={{ color: "#6C7B95" }}
+                          className={campaign.icon}
+                        ></span>
                       </Typography>
                       &nbsp;
                       <Typography className={classes.secondaryHeading}>

@@ -7,7 +7,7 @@ const env = process.env.NODE_ENV || "development";
 const knex = require("knex")(config[env]);
 
 module.exports = knex;
-
+console.log("scsdfcds");
 if (process.env.NODE_ENV != "test") {
   knex.migrate.latest([config]);
 }

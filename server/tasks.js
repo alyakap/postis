@@ -2,24 +2,21 @@ process.env.NODE_ENV = "test";
 var app = require("../app");
 var supertest = require("supertest");
 var knex = require("../db");
-knex.migrate.forceFreeMigrationsLock();
+// knex.migrate.forceFreeMigrationsLock();
 describe("/tasks", () => {
-  //knex.migrate.forceFreeMigrationsLock();
+  // knex.migrate.forceFreeMigrationsLock();
   beforeEach(done => {
-    knex.migrate.rollback().then(() => {
-      knex.migrate.latest().then(() => {
-        return knex.seed.run().then(() => {
-          done();
-        });
-      });
-    });
-  });
+  //   knex.migrate
+  //     .rollback()
+  //     .then(() => knex.migrate.latest())
+  //     .then(() => knex.seed.run());
+  // });
 
-  afterEach(done => {
-    knex.migrate.rollback().then(() => {
-      done();
-    });
-  });
+  // afterEach(done => {
+  //   knex.migrate.rollback().then(() => {
+  //     done();
+  //   });
+  // });
   test("GET /users returns correct fields", async () => {
     const result = await supertest(app).get("/tasks");
     expect(result.statusCode).toBe(200);
@@ -45,7 +42,6 @@ describe("/tasks", () => {
   });
   test("GET /tasks/id returns correct element", async () => {
     const result = await supertest(app).get("/tasks/2");
-    console.log(result.body);
     expect(result.statusCode).toBe(200);
     expect(result.type).toBe("application/json");
     expect(result.body[0]).toHaveProperty("id");
