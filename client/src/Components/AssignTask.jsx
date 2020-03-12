@@ -1,5 +1,5 @@
 import React from "react";
-
+import MenuItem from "@material-ui/core/MenuItem";
 import axios from "axios";
 import withDialog from "../HOCs/withDialog";
 import { Typography, Select } from "@material-ui/core";
@@ -106,24 +106,22 @@ class AssignTask extends React.Component {
         >
           assign to:
         </Typography>
-        <form noValidate>
-          {this.state.users.loading ? (
-            <p>loading</p>
-          ) : (
-            <Select
-              native
-              value={this.state.assignedUser ? this.state.assignedUser : ""}
-              onChange={this.handleChange("id")}
-            >
-              <option value="">Select an user</option>
-              {this.state.users.data.map(user => (
-                <option value={user.id} key={user.firstname}>
-                  {user.firstname}
-                </option>
-              ))}
-            </Select>
-          )}
-        </form>
+
+        {this.state.users.loading ? (
+          <p>loading</p>
+        ) : (
+          <Select
+            value={this.state.assignedUser ? this.state.assignedUser : ""}
+            onChange={this.handleChange("id")}
+          >
+            <MenuItem value="">Select an user</MenuItem>
+            {this.state.users.data.map(user => (
+              <MenuItem value={user.id} key={user.id}>
+                {user.firstname}
+              </MenuItem>
+            ))}
+          </Select>
+        )}
       </>
     );
   }

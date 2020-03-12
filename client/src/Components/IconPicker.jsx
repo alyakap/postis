@@ -11,7 +11,7 @@ const IconListWrap = styled.div`
   &:before,
   &:after {
     bottom: calc(100% - 1px);
-    left: 150px;
+    left: 210px;
     border: solid transparent;
     content: " ";
     height: 0;
@@ -123,24 +123,21 @@ export default class IconPicker extends React.Component {
         "fab fa-twitter",
         "fab fa-facebook",
         "fab fa-linkedin-in",
-        "fas fa-flag",
-        "fas fa-bullhorn",
-        "far fa-bell",
-        "fab fa-twitter",
-        "fab fa-facebook",
-        "fab fa-linkedin-in",
-        "fas fa-flag",
-        "fas fa-bullhorn",
-        "far fa-bell",
-        "fab fa-twitter",
-        "fab fa-facebook",
-        "fab fa-linkedin-in",
-        "fas fa-flag",
-        "fas fa-bullhorn",
-        "far fa-bell",
-        "fab fa-twitter",
-        "fab fa-facebook",
-        "fab fa-linkedin-in"
+        "fas fa-anchor",
+        "fas fa-asterisk",
+        "fas fa-award",
+        "fas fa-band-aid",
+        "fas fa-binoculars",
+        "fas fa-bookmark",
+        "fas fa-broadcast-tower",
+        "fas fa-burn",
+        "fas fa-certificate",
+        "fas fa-cogs",
+        "fas fa-drum",
+        "fas fa-exclamation",
+        "fas fa-feather-alt",
+        "fas fa-fist-raised",
+        "fas fa-gem"
       ],
       top: 0,
       left: 0

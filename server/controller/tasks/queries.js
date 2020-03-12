@@ -7,9 +7,10 @@ const getTasks = async () =>
     .select("tasks.*", "users.firstname", "campaigns.title as campaigntitle")
     .orderBy("created", "desc");
 const getTasksByCampaignId = async campaigns_id =>
-  await knex
-    .select("*")
-    .from("tasks")
+  await knex("tasks")
+    .leftJoin("users", "users.id", "tasks.assigned_user")
+    .leftJoin("campaigns", "campaigns.id", "tasks.campaigns_id")
+    .select("tasks.*", "users.firstname", "campaigns.title as campaigntitle")
     .where({ campaigns_id });
 const getTaskById = async id =>
   await knex("tasks")

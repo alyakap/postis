@@ -1,4 +1,4 @@
-const { validationResult } = require('express-validator');
+const { validationResult } = require("express-validator");
 
 const {
   getCampaigns,
@@ -13,7 +13,7 @@ const errorCheck = (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }
-}
+};
 
 const handleGetCampaignsList = async (req, res) => {
   res.send(await getCampaigns());
@@ -21,12 +21,12 @@ const handleGetCampaignsList = async (req, res) => {
 const handleGetCampaignById = async (req, res) => {
   //check if id was send
   //check if campaignid is an existing one
-  errorCheck(req, res)
+  errorCheck(req, res);
   return res.send(await getCampaignById(parseInt(req.params.id)));
 };
 const handlePostCampaign = async (req, res) => {
   //req.body has all the mandatory fields
-  errorCheck(req, res)
+  //errorCheck(req, res)
   return res.send(await postCampaign(req.body));
 };
 const handleDeleteCampaign = async (req, res) => {
