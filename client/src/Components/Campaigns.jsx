@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import dateFormat from "dateformat";
-
+import Snackbar from "@material-ui/core/Snackbar";
 import AddCampaign from "./AddCampaign";
 import Tasks from "./Tasks";
 import { withStyles } from "@material-ui/core/styles";
@@ -84,7 +84,8 @@ class Campaigns extends React.Component {
       selectedTitle: "",
       addCampaignModal: false,
       updateCampaignModal: false,
-      deleteCampaignModal: false
+      deleteCampaignModal: false,
+      snackOpen: true
     };
   }
 
@@ -169,6 +170,19 @@ class Campaigns extends React.Component {
       deleteCampaignModal: !this.state.deleteCampaignModal
     });
   };
+  handleSnackOpen = () => {
+    this.setState({
+      snackOpen: true
+    });
+  };
+  handleSnackClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({
+      snackOpen: false
+    });
+  };
 
   render() {
     const { classes } = this.props;
@@ -180,6 +194,7 @@ class Campaigns extends React.Component {
           {this.state.addCampaignModal && (
             <AddCampaign
               toggle={this.handleToggleModalAddCampaigns}
+              snack={this.handleSnackOpen}
               getItems={this.getCampaigns}
             />
           )}
@@ -280,6 +295,16 @@ class Campaigns extends React.Component {
               })}
             </div>
           </div>
+          <Snackbar
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left"
+            }}
+            open={this.state.snackOpen}
+            autoHideDuration={2000}
+            onClose={this.handleSnackClose}
+            message="Note archived"
+          />
         </Container>
       </>
     );

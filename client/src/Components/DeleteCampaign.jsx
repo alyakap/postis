@@ -18,7 +18,6 @@ class DeleteCampaign extends React.Component {
     );
   };
   componentDidMount = () => {
-    console.log("component did mount works", this.state.id);
     this.props.passStateUp(this.state);
   };
 

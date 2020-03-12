@@ -3,26 +3,31 @@ var app = require("../app");
 var supertest = require("supertest");
 var knex = require("../db");
 
-// beforeEach(done => {
-//   knex.migrate.rollback().then(() => {
-//     knex.migrate.latest().then(() => {
-//       return knex.seed.run().then(() => {
-//         done();
-//       });
-//     });
-//   });
-// });
-// // afterEach(() => {
-// //   return knex.migrate.rollback();
-// // });
-// afterEach(done => {
-//   knex.migrate.rollback().then(() => {
-//     done();
-//   });
-// });
+
+
+
+beforeEach(function (done) {
+  knex.migrate.rollback()
+    .then(function () {
+      knex.migrate.latest()
+        .then(function () {
+          return knex.seed.run()
+            .then(function () {
+              done();
+            });
+        });
+    });
+});
+
+afterEach(function (done) {
+  knex.migrate.rollback()
+    .then(function () {
+      done();
+    });
+});
 
 describe("/campaigns", () => {
-  test("GET /campaigns returns correct fields", async () => {
+  test("GET /campaigns returns correct fields", async (done) => {
     const result = await supertest(app).get("/campaigns");
     expect(result.statusCode).toBe(200);
     expect(result.type).toBe("application/json");
@@ -33,8 +38,9 @@ describe("/campaigns", () => {
     expect(result.body[0]).toHaveProperty("color");
     expect(result.body[0]).toHaveProperty("icon");
     expect(result.body.length).toBe(3);
+    done()
   });
-  test("GET /campaigns/id returns correct element", async () => {
+  test("GET /campaigns/id returns correct element", async (done) => {
     const result = await supertest(app).get("/campaigns/2");
     expect(result.statusCode).toBe(200);
     expect(result.type).toBe("application/json");
@@ -46,8 +52,9 @@ describe("/campaigns", () => {
     expect(result.body[0]).toHaveProperty("color");
     expect(result.body[0]).toHaveProperty("icon");
     expect(result.body.length).toBe(1);
+    done()
   });
-  test("POST /campaigns adds campaign correctly", async () => {
+  test("POST /campaigns adds campaign correctly", async (done) => {
     const result = await supertest(app)
       .post("/campaigns")
       .send({
@@ -58,8 +65,9 @@ describe("/campaigns", () => {
     expect(result.statusCode).toBe(200);
     expect(result.type).toBe("application/json");
     expect(result.body.length).toBe(1);
+    done()
   });
-  test("PUT /campaigns updates campaign correctly", async () => {
+  test("PUT /campaigns updates campaign correctly", async (done) => {
     const result = await supertest(app)
       .put("/campaigns/3")
       .send({
@@ -77,12 +85,12 @@ describe("/campaigns", () => {
     expect(result.statusCode).toBe(200);
     expect(result.type).toBe("application/json");
     expect(result.body.length).toBe(1);
+    done()
   });
-  test("DELETE /campaigns removes specific campaign correctly", async () => {
+  test("DELETE /campaigns removes specific campaign correctly", async (done) => {
     const result = await supertest(app).delete("/campaigns/6");
     expect(result.statusCode).toBe(200);
+    done()
   });
-  afterAll(function() {
-    return knex.destroy();
-  });
-});
+})
+

@@ -10,6 +10,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+
 const styles = theme => ({
   paper: {
     marginTop: theme.spacing(1),
@@ -52,10 +53,10 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
           console.log(err);
           this.props.toggle();
         });
+      settingsObject.snackOpen();
     };
     render() {
       const { classes } = this.props;
-
       return (
         <div>
           <Dialog

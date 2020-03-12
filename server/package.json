@@ -20,15 +20,15 @@
     "supertest": "^4.0.2"
   },
   "scripts": {
-    "test": "cross-env NODE_ENV=test jest",
+    "test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles",
     "server": "cross-env NODE_ENV=development nodemon server.js",
-    "db": "docker-compose up -d",
+    "db": "docker-compose up -d --remove-orphans",
     "start": "npm run db && npm run server",
     "stop": "docker-compose down",
-    "migrate-dev": "cross-env NODE_ENV=dev knex migrate:latest -- env dev",
-    "migrate-test": "cross-env NODE_ENV=test knex migrate:latest -- env test",
-    "seed-dev": "cross-env NODE_ENV=development knex seed:run -- env development",
-    "seed-test": "cross-env NODE_ENV=test knex seed:run -- env test"
+    "migrate-dev": "cross-env NODE_ENV=development knex migrate:latest --env development",
+    "migrate-test": "cross-env NODE_ENV=test knex migrate:latest --env test",
+    "seed-dev": "cross-env NODE_ENV=development knex seed:run --env development",
+    "seed-test": "cross-env NODE_ENV=test knex seed:run --env test"
   },
   "repository": {
     "type": "git",
