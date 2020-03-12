@@ -43,16 +43,21 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
     };
     handleSubmit = e => {
       e.preventDefault();
-      settingsObject
-        .submit(this.state)
-        .then(resp => {
-          this.props.toggle();
-          this.props.getItems();
-        })
-        .catch(err => {
-          console.log(err);
-          this.props.toggle();
-        });
+      if (Object.entries(this.state).length === 0) {
+        this.props.toggle();
+        this.props.getItems();
+      } else {
+        settingsObject
+          .submit(this.state)
+          .then(resp => {
+            this.props.toggle();
+            this.props.getItems();
+          })
+          .catch(err => {
+            console.log(err);
+            this.props.toggle();
+          });
+      }
     };
     render() {
       const { classes } = this.props;

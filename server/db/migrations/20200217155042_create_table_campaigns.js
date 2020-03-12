@@ -3,7 +3,7 @@ exports.up = function(knex) {
     tbl.increments("id").primary();
     tbl.string("title", 200);
     tbl.string("color", 8);
-    tbl.string("icon", 20);
+    tbl.string("icon", 30);
     tbl.timestamp("created").defaultTo(knex.fn.now());
     tbl.timestamp("updated").nullable();
   });
