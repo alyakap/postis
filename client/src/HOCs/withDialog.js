@@ -53,7 +53,6 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
           console.log(err);
           this.props.toggle();
         });
-      settingsObject.snackOpen();
     };
     render() {
       const { classes } = this.props;

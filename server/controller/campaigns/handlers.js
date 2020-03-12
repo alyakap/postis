@@ -1,3 +1,5 @@
+const { validationResult } = require('express-validator');
+
 const {
   getCampaigns,
   postCampaign,
@@ -6,14 +8,26 @@ const {
   getCampaignById
 } = require("./queries");
 
+const errorCheck = (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+}
+
 const handleGetCampaignsList = async (req, res) => {
   res.send(await getCampaigns());
 };
 const handleGetCampaignById = async (req, res) => {
-  res.send(await getCampaignById(parseInt(req.params.id)));
+  //check if id was send
+  //check if campaignid is an existing one
+  errorCheck(req, res)
+  return res.send(await getCampaignById(parseInt(req.params.id)));
 };
 const handlePostCampaign = async (req, res) => {
-  res.send(await postCampaign(req.body));
+  //req.body has all the mandatory fields
+  errorCheck(req, res)
+  return res.send(await postCampaign(req.body));
 };
 const handleDeleteCampaign = async (req, res) => {
   const campaigns = await deleteCampaign(parseInt(req.params.id));

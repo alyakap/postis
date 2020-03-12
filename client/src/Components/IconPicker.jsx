@@ -7,7 +7,6 @@ const IconListWrap = styled.div`
   position: relative;
   top: 10px;
   left: 0;
-  max-width: 300px;
   z-index: 9999;
   &:before,
   &:after {
@@ -123,6 +122,24 @@ export default class IconPicker extends React.Component {
         "far fa-bell",
         "fab fa-twitter",
         "fab fa-facebook",
+        "fab fa-linkedin-in",
+        "fas fa-flag",
+        "fas fa-bullhorn",
+        "far fa-bell",
+        "fab fa-twitter",
+        "fab fa-facebook",
+        "fab fa-linkedin-in",
+        "fas fa-flag",
+        "fas fa-bullhorn",
+        "far fa-bell",
+        "fab fa-twitter",
+        "fab fa-facebook",
+        "fab fa-linkedin-in",
+        "fas fa-flag",
+        "fas fa-bullhorn",
+        "far fa-bell",
+        "fab fa-twitter",
+        "fab fa-facebook",
         "fab fa-linkedin-in"
       ],
       top: 0,
@@ -174,7 +191,7 @@ export default class IconPicker extends React.Component {
             <IconListWrap
               style={{
                 top: `${this.state.top + 10}px`,
-                left: `${this.state.left + 50}px`
+                left: `${this.state.left}px`
               }}
             >
               <IconListInner>

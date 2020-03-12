@@ -20,7 +20,7 @@
     "supertest": "^4.0.2"
   },
   "scripts": {
-    "test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles",
+    "test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles --forceExit",
     "server": "cross-env NODE_ENV=development nodemon server.js",
     "db": "docker-compose up -d --remove-orphans",
     "start": "npm run db && npm run server",

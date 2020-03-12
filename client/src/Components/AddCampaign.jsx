@@ -34,10 +34,7 @@ class AddCampaign extends React.Component {
       );
     };
   };
-  // static snackOpen = () => {
-  //   let open = this.props.snack;
-  //   return open;
-  // };
+
   handleOpenIconPicker = () => {
     this.setState({
       ...this.state,
@@ -108,7 +105,5 @@ class AddCampaign extends React.Component {
 export default withDialog({
   title: "Add new campaign",
   icon: "add",
-  snackOpen: AddCampaign.snackOpen,
-  snack: "New campaign successfully added",
   submit: AddCampaign.submit
 })(AddCampaign);

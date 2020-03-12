@@ -194,7 +194,7 @@ class Campaigns extends React.Component {
           {this.state.addCampaignModal && (
             <AddCampaign
               toggle={this.handleToggleModalAddCampaigns}
-              snack={this.handleSnackOpen}
+              //snack={this.handleSnackOpen}
               getItems={this.getCampaigns}
             />
           )}

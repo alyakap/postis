@@ -1,5 +1,4 @@
 const campaignsRouter = require("express").Router();
-
 const {
   handleGetCampaignsList,
   handlePostCampaign,
@@ -8,9 +7,16 @@ const {
   handleGetCampaignById
 } = require("./handlers");
 
+const {
+  validateCampaignById,
+  validatePostCampaign
+} = require('./validations')
+
+
+
 campaignsRouter.get("/", handleGetCampaignsList);
-campaignsRouter.get("/:id", handleGetCampaignById);
-campaignsRouter.post("/", handlePostCampaign);
+campaignsRouter.get("/:id", validateCampaignById(), handleGetCampaignById);
+campaignsRouter.post("/", validatePostCampaign(), handlePostCampaign);
 campaignsRouter.delete("/:id", handleDeleteCampaign);
 campaignsRouter.put("/:id", handleUpdateCampaign);
 
