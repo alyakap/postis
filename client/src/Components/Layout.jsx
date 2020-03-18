@@ -9,7 +9,7 @@ import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-
+import Snackbar from "@material-ui/core/Snackbar";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ListItems from "./ListItems";
@@ -109,7 +109,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Layout({ children }) {
+export default function Layout({
+  children,
+  snackMessage,
+  showSnack,
+  setShowSnack
+}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -177,6 +182,18 @@ export default function Layout({ children }) {
             {children}
           </main>
         </div>
+        <Snackbar
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left"
+          }}
+          open={showSnack}
+          autoHideDuration={2000}
+          onClose={() => {
+            setShowSnack(false);
+          }}
+          message={snackMessage}
+        />
       </Router>
     </>
   );

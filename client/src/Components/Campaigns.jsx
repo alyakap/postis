@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import dateFormat from "dateformat";
-import Snackbar from "@material-ui/core/Snackbar";
 import AddCampaign from "./AddCampaign";
 import Tasks from "./Tasks";
 import { withStyles } from "@material-ui/core/styles";
@@ -295,16 +294,6 @@ class Campaigns extends React.Component {
               })}
             </div>
           </div>
-          <Snackbar
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left"
-            }}
-            open={this.state.snackOpen}
-            autoHideDuration={2000}
-            onClose={this.handleSnackClose}
-            message="Note archived"
-          />
         </Container>
       </>
     );
