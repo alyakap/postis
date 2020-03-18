@@ -193,14 +193,16 @@ class Campaigns extends React.Component {
           {this.state.addCampaignModal && (
             <AddCampaign
               toggle={this.handleToggleModalAddCampaigns}
-              //snack={this.handleSnackOpen}
+              setShowSnack={this.props.setShowSnack}
+              setSnackMessage={this.props.setSnackMessage}
               getItems={this.getCampaigns}
             />
           )}
-
           {this.state.updateCampaignModal && (
             <EditCampaign
               toggle={this.handleToggleModalEditCampaign}
+              setShowSnack={this.props.setShowSnack}
+              setSnackMessage={this.props.setSnackMessage}
               id={this.state.selectedId}
               getItems={this.getCampaigns}
             />

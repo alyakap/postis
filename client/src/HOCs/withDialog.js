@@ -52,6 +52,16 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
           .then(resp => {
             this.props.toggle();
             this.props.getItems();
+            switch (settingsObject.icon) {
+              case "add":
+                this.props.setSnackMessage("Campaign was added succesfully");
+                break;
+              case "edit":
+                this.props.setSnackMessage("Campaign was changed succesfully");
+                break;
+              default:
+            }
+            this.props.setShowSnack(true);
           })
           .catch(err => {
             console.log(err);
