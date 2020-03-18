@@ -11,7 +11,10 @@ const {
 const errorCheck = (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
+    res.send({ errors: errors.array() });
+    return true;
+  } else {
+    return false;
   }
 };
 
@@ -21,13 +24,15 @@ const handleGetCampaignsList = async (req, res) => {
 const handleGetCampaignById = async (req, res) => {
   //check if id was send
   //check if campaignid is an existing one
-  errorCheck(req, res);
-  return res.send(await getCampaignById(parseInt(req.params.id)));
+  if (!errorCheck(req, res)) {
+    res.send(await getCampaignById(parseInt(req.params.id)));
+  }
 };
 const handlePostCampaign = async (req, res) => {
   //req.body has all the mandatory fields
-  //errorCheck(req, res)
-  return res.send(await postCampaign(req.body));
+  if (!errorCheck(req, res)) {
+    res.send(await postCampaign(req.body));
+  }
 };
 const handleDeleteCampaign = async (req, res) => {
   const campaigns = await deleteCampaign(parseInt(req.params.id));

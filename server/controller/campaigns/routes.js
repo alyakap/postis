@@ -11,7 +11,7 @@ const { validateCampaignById, validatePostCampaign } = require("./validations");
 
 campaignsRouter.get("/", handleGetCampaignsList);
 campaignsRouter.get("/:id", validateCampaignById(), handleGetCampaignById);
-campaignsRouter.post("/", handlePostCampaign);
+campaignsRouter.post("/", validatePostCampaign(), handlePostCampaign);
 campaignsRouter.delete("/:id", handleDeleteCampaign);
 campaignsRouter.put("/:id", handleUpdateCampaign);
 
