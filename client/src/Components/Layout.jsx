@@ -10,11 +10,15 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ListItems from "./ListItems";
 import { BrowserRouter as Router } from "react-router-dom";
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const drawerWidth = 200;
 
 const useStyles = makeStyles(theme => ({
@@ -113,7 +117,8 @@ export default function Layout({
   children,
   snackMessage,
   showSnack,
-  setShowSnack
+  setShowSnack,
+  severity
 }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -182,6 +187,7 @@ export default function Layout({
             {children}
           </main>
         </div>
+
         <Snackbar
           anchorOrigin={{
             vertical: "bottom",
@@ -192,8 +198,16 @@ export default function Layout({
           onClose={() => {
             setShowSnack(false);
           }}
-          message={snackMessage}
-        />
+        >
+          <Alert
+            onClose={() => {
+              setShowSnack(false);
+            }}
+            severity={severity}
+          >
+            {snackMessage}
+          </Alert>
+        </Snackbar>
       </Router>
     </>
   );

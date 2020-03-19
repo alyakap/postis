@@ -167,6 +167,9 @@ class Tasks extends Component {
           <AddTask
             toggle={this.handleToggleModalAddTask}
             getItems={this.getTasks}
+            setShowSnack={this.props.setShowSnack}
+            setSnackMessage={this.props.setSnackMessage}
+            setSeverity={this.props.setSeverity}
           />
         )}
         {this.state.editTaskModal && (
@@ -174,6 +177,9 @@ class Tasks extends Component {
             toggle={this.handleToggleModalEditTask}
             getItems={this.getTasks}
             id={this.state.selectedId}
+            setShowSnack={this.props.setShowSnack}
+            setSnackMessage={this.props.setSnackMessage}
+            setSeverity={this.props.setSeverity}
           />
         )}
         {this.state.assignTaskModal && (
@@ -183,6 +189,9 @@ class Tasks extends Component {
             id={this.state.selectedId}
             title={this.state.selectedTitle}
             assigned_user={this.state.selectedAssignedUser}
+            setShowSnack={this.props.setShowSnack}
+            setSnackMessage={this.props.setSnackMessage}
+            setSeverity={this.props.setSeverity}
           />
         )}
 
@@ -290,7 +299,16 @@ class Tasks extends Component {
                           >
                             <EditIcon />
                           </Button>
-                          <Button onClick={() => this.deleteTask(task.id)}>
+                          <Button
+                            onClick={() => {
+                              this.deleteTask(task.id);
+                              this.props.setShowSnack(true);
+                              this.props.setSnackMessage(
+                                "The task was removed"
+                              );
+                              this.props.setSeverity("info");
+                            }}
+                          >
                             <DeleteIcon />
                           </Button>
                         </TableCell>

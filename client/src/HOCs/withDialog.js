@@ -52,12 +52,37 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
           .then(resp => {
             this.props.toggle();
             this.props.getItems();
-            switch (settingsObject.icon) {
-              case "add":
-                this.props.setSnackMessage("Campaign was added succesfully");
+            switch (settingsObject.title) {
+              case "Add new campaign":
+                this.props.setSnackMessage(
+                  "New campaign was added successfully"
+                );
+                this.props.setSeverity("success");
                 break;
-              case "edit":
-                this.props.setSnackMessage("Campaign was changed succesfully");
+              case "Edit Campaign":
+                this.props.setSnackMessage(
+                  "The campaign was changed successfully"
+                );
+                this.props.setSeverity("success");
+                break;
+              case "Delete Campaign":
+                this.props.setSnackMessage("The campaign was removed");
+                this.props.setSeverity("info");
+                break;
+              case "Add new task":
+                this.props.setSnackMessage("New task was added successfully");
+                this.props.setSeverity("success");
+                break;
+
+              case "Edit Task":
+                this.props.setSnackMessage("The task was changed successfully");
+                this.props.setSeverity("success");
+                break;
+              case "Assign Task to User":
+                this.props.setSnackMessage(
+                  "The task was assigned successfully"
+                );
+                this.props.setSeverity("info");
                 break;
               default:
             }

@@ -12,14 +12,17 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 library.add(fab);
 
 export default function App() {
-  const [showSnack, setShowSnack] = React.useState(true);
-  const [snackMessage, setSnackMessage] = React.useState("test");
+  const [showSnack, setShowSnack] = React.useState(false);
+  const [snackMessage, setSnackMessage] = React.useState("");
+  const [severity, setSeverity] = React.useState("");
   return (
     <>
       <Layout
         snackMessage={snackMessage}
         showSnack={showSnack}
         setShowSnack={setShowSnack}
+        severity={severity}
+        setSeverity={setSeverity}
       >
         <Switch>
           <Route exact path="/" component={Home} />
@@ -30,10 +33,21 @@ export default function App() {
               <Campaigns
                 setShowSnack={setShowSnack}
                 setSnackMessage={setSnackMessage}
+                setSeverity={setSeverity}
               />
             )}
           />
-          <Route exact path="/tasks" component={Tasks} />
+          <Route
+            exact
+            path="/tasks"
+            render={() => (
+              <Tasks
+                setShowSnack={setShowSnack}
+                setSnackMessage={setSnackMessage}
+                setSeverity={setSeverity}
+              />
+            )}
+          />
           <Route path="/task/:id" component={Task} />
         </Switch>
       </Layout>

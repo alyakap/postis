@@ -18,6 +18,7 @@ class AddCampaign extends React.Component {
   }
   static submit = data =>
     axios.post(`${process.env.REACT_APP_API_URL}/campaigns`, data);
+
   handleChange = field => {
     return e => {
       const newState = { ...this.state.data };

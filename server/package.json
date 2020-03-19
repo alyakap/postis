@@ -21,6 +21,7 @@
     "supertest": "^4.0.2"
   },
   "scripts": {
+    "hanim": "cross-env NODE_ENV=development node testfile.js",
     "test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles",
     "server": "cross-env NODE_ENV=development nodemon server.js",
     "db": "docker-compose up -d --remove-orphans",

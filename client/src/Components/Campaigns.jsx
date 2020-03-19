@@ -83,8 +83,7 @@ class Campaigns extends React.Component {
       selectedTitle: "",
       addCampaignModal: false,
       updateCampaignModal: false,
-      deleteCampaignModal: false,
-      snackOpen: true
+      deleteCampaignModal: false
     };
   }
 
@@ -169,19 +168,6 @@ class Campaigns extends React.Component {
       deleteCampaignModal: !this.state.deleteCampaignModal
     });
   };
-  handleSnackOpen = () => {
-    this.setState({
-      snackOpen: true
-    });
-  };
-  handleSnackClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    this.setState({
-      snackOpen: false
-    });
-  };
 
   render() {
     const { classes } = this.props;
@@ -195,6 +181,7 @@ class Campaigns extends React.Component {
               toggle={this.handleToggleModalAddCampaigns}
               setShowSnack={this.props.setShowSnack}
               setSnackMessage={this.props.setSnackMessage}
+              setSeverity={this.props.setSeverity}
               getItems={this.getCampaigns}
             />
           )}
@@ -203,6 +190,7 @@ class Campaigns extends React.Component {
               toggle={this.handleToggleModalEditCampaign}
               setShowSnack={this.props.setShowSnack}
               setSnackMessage={this.props.setSnackMessage}
+              setSeverity={this.props.setSeverity}
               id={this.state.selectedId}
               getItems={this.getCampaigns}
             />
@@ -213,6 +201,9 @@ class Campaigns extends React.Component {
               id={this.state.selectedId}
               title={this.state.selectedTitle}
               getItems={this.getCampaigns}
+              setShowSnack={this.props.setShowSnack}
+              setSnackMessage={this.props.setSnackMessage}
+              setSeverity={this.props.setSeverity}
             />
           )}
           <div className={classes.heroContent}>

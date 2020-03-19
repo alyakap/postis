@@ -6,7 +6,7 @@ const validatePostCampaign = () =>
   checkSchema({
     title: {
       isLength: {
-        options: { min: 10, max: undefined },
+        options: { min: 3, max: undefined },
         errorMessage: "Title should be at least 10 characters"
       }
     },
@@ -19,10 +19,10 @@ const validatePostCampaign = () =>
         },
         errorMessage: "# not included"
       }
-    },
-    icon: {
-      isAlphanumeric: true
     }
+    // icon: {
+    //   isAlphanumeric: true
+    // }
   });
 
 module.exports = {
