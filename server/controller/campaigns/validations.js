@@ -1,4 +1,4 @@
-const { check, checkSchema } = require("express-validator");
+const { check, checkSchema, body } = require("express-validator");
 const knex = require("../../db");
 const validateCampaignById = () => [check("id").isInt()];
 
@@ -36,9 +36,9 @@ const validateDeleteCampaign = () =>
   checkSchema({
     id: {
       custom: {
-        options: ({ req }) => {
+        options: value => {
           return knex("campaigns")
-            .where({ id: req.body.id })
+            .where({ id: value })
             .then(arr => {
               if (arr.length !== 1) {
                 return Promise.reject("campaign is not existing");

@@ -35,12 +35,16 @@ const handlePostCampaign = async (req, res) => {
   }
 };
 const handleDeleteCampaign = async (req, res) => {
-  const campaigns = await deleteCampaign(parseInt(req.params.id));
-  res.json(campaigns);
+  if (!errorCheck(req, res)) {
+    const campaigns = await deleteCampaign(parseInt(req.params.id));
+    res.json(campaigns);
+  }
 };
 const handleUpdateCampaign = async (req, res) => {
-  const campaigns = await updateCampaign(parseInt(req.params.id), req.body);
-  res.json(campaigns);
+  if (!errorCheck(req, res)) {
+    const campaigns = await updateCampaign(parseInt(req.params.id), req.body);
+    res.json(campaigns);
+  }
 };
 
 module.exports = {

@@ -12,16 +12,26 @@ const {
   //  handleGetSpecificTask, handleGetUserTask, handlePostTask, handleDeleteTask, handleUpdateTask
 } = require("./handlers");
 
-const { validatePostTask } = require("./validations");
+const {
+  validateTaskByCampaignId,
+  validateTaskById,
+  validatePostTask,
+  validateDeleteTask,
+  validateEditTask,
+  validateAssignTask
+} = require("./validations");
 
 tasksRouter.get("/", handleGetTasksList);
-tasksRouter.get("/fromcampaign/:id", handleGetTasksByCampaignId);
-//tasksRouter.get("/:id", handleGetTaskById);
-tasksRouter.get("/:id", handleGetTaskByIdExtraFields);
+tasksRouter.get(
+  "/fromcampaign/:id",
+  validateTaskByCampaignId(),
+  handleGetTasksByCampaignId
+);
+tasksRouter.get("/:id", validateTaskById(), handleGetTaskByIdExtraFields);
 tasksRouter.post("/", validatePostTask(), handlePostTask);
-tasksRouter.delete("/:id", handleDeleteTask);
-tasksRouter.put("/:id", handleEditTask);
-tasksRouter.put("/:id/assign", handleAssignTask);
+tasksRouter.delete("/:id", validateDeleteTask(), handleDeleteTask);
+tasksRouter.put("/:id", validateEditTask(), handleEditTask);
+tasksRouter.put("/:id/assign", validateAssignTask(), handleAssignTask);
 
 module.exports = tasksRouter;
 
