@@ -1,30 +1,28 @@
+const { checkSchema } = require("express-validator");
+
 const validatePostTask = () =>
   checkSchema({
-    campaignId: {
+    title: {
+      isLength: {
+        options: { min: 10, max: undefined },
+        errorMessage: "Title should be at least 10 characters"
+      }
+    },
+    campaigns_id: {
       custom: {
-        options: async value => {
-          return (await knex("campaigns").where({ id: 33 })) == null;
-        },
-        errorMessage: "# not included"
+        options: value => {
+          return knex("campaigns")
+            .where({ id: value })
+            .then(arr => {
+              if (arr.length !== 1) {
+                return Promise.reject("campaigns_id not existing");
+              }
+            });
+        }
       }
     }
-    // title: {
-    //   isLength: {
-    //     options: { min: 10, max: undefined },
-    //     errorMessage: "Title should be at least 10 characters"
-    //   }
-    // },
-    // color: {
-    //   isHexColor: true,
-    //   errorMessage: "Invalid hexcolor",
-    //   custom: {
-    //     options: value => {
-    //       return value.indexOf("#") === 0;
-    //     },
-    //     errorMessage: "# not included"
-    //   }
-    // },
-    // icon: {
-    //   isAlphanumeric: true
-    // }
   });
+
+module.exports = {
+  validatePostTask
+};
