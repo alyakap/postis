@@ -1,5 +1,5 @@
 const { checkSchema } = require("express-validator");
-
+const knex = require("../../db");
 const validatePostTask = () =>
   checkSchema({
     title: {
