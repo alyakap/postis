@@ -18,7 +18,8 @@ const postCampaign = async data =>
 const deleteCampaign = async id =>
   await knex("campaigns")
     .where({ id })
-    .delete();
+    .delete()
+    .returning("*");
 const updateCampaign = async (id, data) =>
   await knex("campaigns")
     .where({ id })

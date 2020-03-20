@@ -1,5 +1,5 @@
 const { check, checkSchema } = require("express-validator");
-
+const knex = require("../../db");
 const validateCampaignById = () => [check("id").isInt()];
 
 const validatePostCampaign = () =>
@@ -7,7 +7,18 @@ const validatePostCampaign = () =>
     title: {
       isLength: {
         options: { min: 3, max: undefined },
-        errorMessage: "Title should be at least 10 characters"
+        errorMessage: "Title should be at least 3 characters"
+      },
+      custom: {
+        options: value => {
+          return knex("campaigns")
+            .where({ title: value })
+            .then(arr => {
+              if (arr.length === 1) {
+                return Promise.reject("campaign is already in use");
+              }
+            });
+        }
       }
     },
     color: {
@@ -20,12 +31,57 @@ const validatePostCampaign = () =>
         errorMessage: "# not included"
       }
     }
-    // icon: {
-    //   isAlphanumeric: true
-    // }
+  });
+const validateDeleteCampaign = () =>
+  checkSchema({
+    id: {
+      custom: {
+        options: ({ req }) => {
+          return knex("campaigns")
+            .where({ id: req.body.id })
+            .then(arr => {
+              if (arr.length !== 1) {
+                return Promise.reject("campaign is not existing");
+              }
+            });
+        }
+      }
+    }
+  });
+const validateUpdateCampaign = () =>
+  checkSchema({
+    title: {
+      isLength: {
+        options: { min: 3, max: undefined },
+        errorMessage: "Title should be at least 3 characters"
+      },
+      custom: {
+        options: value => {
+          return knex("campaigns")
+            .where({ title: value })
+            .then(arr => {
+              if (arr.length === 1) {
+                return Promise.reject("campaign is already in use");
+              }
+            });
+        }
+      }
+    },
+    color: {
+      isHexColor: true,
+      errorMessage: "Invalid hexcolor",
+      custom: {
+        options: value => {
+          return value.indexOf("#") === 0;
+        },
+        errorMessage: "# not included"
+      }
+    }
   });
 
 module.exports = {
   validateCampaignById,
-  validatePostCampaign
+  validatePostCampaign,
+  validateDeleteCampaign,
+  validateUpdateCampaign
 };
