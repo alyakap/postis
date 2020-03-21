@@ -1,5 +1,5 @@
 import React from "react";
-
+import FormHelperText from "@material-ui/core/FormHelperText";
 import { TextField } from "@material-ui/core";
 import { InputLabel, FormControl, Select } from "@material-ui/core";
 import axios from "axios";
@@ -127,8 +127,11 @@ class EditTask extends React.Component {
     return (
       <>
         <TextField
+          error={this.props.error.param === "title"}
+          helperText={
+            this.props.error.param === "title" && this.props.error.msg
+          }
           margin="normal"
-          required
           fullWidth
           id="tasks"
           label="Title"
@@ -140,6 +143,10 @@ class EditTask extends React.Component {
           onChange={this.handleChange("title")}
         />
         <TextField
+          error={this.props.error.param === "description"}
+          helperText={
+            this.props.error.param === "description" && this.props.error.msg
+          }
           margin="normal"
           fullWidth
           required
@@ -152,7 +159,10 @@ class EditTask extends React.Component {
           value={this.state.toBeSend.description || ""}
           onChange={this.handleChange("description")}
         />
-        <FormControl style={{ width: "100%", marginTop: "16px" }}>
+        <FormControl
+          style={{ width: "100%", marginTop: "16px" }}
+          error={this.props.error.param === "campaigns_id"}
+        >
           <InputLabel htmlFor="outlined-age-native-simple">
             Belongs to Campaign
           </InputLabel>
@@ -170,6 +180,9 @@ class EditTask extends React.Component {
             ))}
           </Select>
         </FormControl>
+        {this.props.error.param === "campaigns_id" && (
+          <FormHelperText>{this.props.error.msg}</FormHelperText>
+        )}
         <FormControlLabel
           control={
             <Checkbox

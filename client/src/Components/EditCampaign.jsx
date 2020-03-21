@@ -3,6 +3,7 @@ import IconPicker from "./IconPicker";
 import { TextField, InputLabel, FormControl, Select } from "@material-ui/core";
 import axios from "axios";
 import withDialog from "../HOCs/withDialog";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 class EditCampaign extends React.Component {
   constructor(props) {
@@ -121,6 +122,7 @@ class EditCampaign extends React.Component {
 
         <FormControl
           style={{ width: "100%", marginTop: "16px", marginBottom: "16px" }}
+          error={this.props.error.param === "color"}
         >
           <InputLabel htmlFor="outlined-age-native-simple">
             Indicate priority with color
@@ -137,6 +139,9 @@ class EditCampaign extends React.Component {
             <option value="#D9FFDF">Green-Low</option>
             <option value="#D9FFFF">Blue-Very low</option>
           </Select>
+          {this.props.error.param === "color" && (
+            <FormHelperText>{this.props.error.msg}</FormHelperText>
+          )}
           <IconPicker
             handleChangeIcon={this.handleChangeIcon}
             selectedIcon={this.state.request.data.icon}
