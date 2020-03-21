@@ -11,7 +11,7 @@ const {
 const errorCheck = (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    res.send({ errors: errors.array() });
+    res.status(422).json({ errors: errors.array() });
     return true;
   } else {
     return false;
@@ -30,6 +30,7 @@ const handleGetCampaignById = async (req, res) => {
 };
 const handlePostCampaign = async (req, res) => {
   //req.body has all the mandatory fields
+
   if (!errorCheck(req, res)) {
     res.send(await postCampaign(req.body));
   }

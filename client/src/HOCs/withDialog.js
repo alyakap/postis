@@ -50,6 +50,7 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
         settingsObject
           .submit(this.state)
           .then(resp => {
+            //console.log(resp);
             this.props.toggle();
             this.props.getItems();
             switch (settingsObject.title) {
@@ -88,9 +89,9 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
             }
             this.props.setShowSnack(true);
           })
-          .catch(err => {
-            console.log(err);
-            this.props.toggle();
+          .catch(error => {
+            console.log(error);
+            //this.props.toggle();
           });
       }
     };
