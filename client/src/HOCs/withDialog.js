@@ -34,11 +34,14 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
   class HOC extends Component {
     constructor(props) {
       super(props);
-      this.state = {};
+      this.state = {
+        data: {},
+        error: ""
+      };
     }
     passStateUp = passedState => {
       this.setState({
-        ...passedState
+        data: passedState
       });
     };
     handleSubmit = e => {
@@ -48,7 +51,7 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
         this.props.getItems();
       } else {
         settingsObject
-          .submit(this.state)
+          .submit(this.state.data)
           .then(resp => {
             //console.log(resp);
             this.props.toggle();
@@ -90,8 +93,11 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
             this.props.setShowSnack(true);
           })
           .catch(error => {
-            console.log(error);
-            //this.props.toggle();
+            let errObj = JSON.parse(error.response.request.response);
+            console.log("2", errObj.errors[0].msg);
+            this.setState({
+              error: errObj.errors[0].msg
+            });
           });
       }
     };
@@ -108,6 +114,7 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
               id="myform"
               onSubmit={this.handleSubmit}
               className={classes.form}
+              noValidate
             >
               <DialogContent>
                 <div className={classes.paper}>
@@ -123,6 +130,7 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
                   <WrappedComponent
                     passStateUp={this.passStateUp}
                     {...this.props}
+                    error={this.state.error}
                   />
                 </div>
               </DialogContent>

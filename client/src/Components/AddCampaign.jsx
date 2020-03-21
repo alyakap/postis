@@ -60,8 +60,8 @@ class AddCampaign extends React.Component {
     return (
       <>
         <TextField
+          error={this.props.error ? true : false}
           margin="normal"
-          required
           fullWidth
           style={{ backgroundColor: "white" }}
           id="campaign"
@@ -72,6 +72,7 @@ class AddCampaign extends React.Component {
           autoFocus
           value={this.state.data.title}
           onChange={this.handleChange("title")}
+          helperText={this.props.error || ""}
         />
 
         <FormControl
