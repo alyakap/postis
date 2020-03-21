@@ -103,8 +103,10 @@ class EditCampaign extends React.Component {
     return (
       <>
         <TextField
-          error={this.props.error ? true : false}
-          helperText={this.props.error || ""}
+          error={this.props.error.param === "title"}
+          helperText={
+            this.props.error.param === "title" && this.props.error.msg
+          }
           margin="normal"
           fullWidth
           id="campaign"

@@ -11,7 +11,7 @@ const { validationResult } = require("express-validator");
 const errorCheck = (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    res.send({ errors: errors.array() });
+    res.status(422).json({ errors: errors.array() });
     return true;
   } else {
     return false;

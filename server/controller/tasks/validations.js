@@ -54,13 +54,20 @@ const validatePostTask = () =>
       }
     },
     campaigns_id: {
+      isInt: true,
+      //isEmpty: false
+      errorMessage: "A campaign should be selected",
+      // isLength: {
+      //   options: { min: 0, max: undefined },
+      //   errorMessage: "A campaign should be selected"
+      // }
       custom: {
         options: value => {
           return knex("campaigns")
             .where({ id: value })
             .then(arr => {
               if (arr.length !== 1) {
-                return Promise.reject("campaigns_id not existing");
+                return Promise.reject("campaigns is  not existing");
               }
             });
         }

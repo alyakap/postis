@@ -23,12 +23,18 @@ const validatePostCampaign = () =>
     },
     color: {
       isHexColor: true,
-      errorMessage: "Invalid hexcolor",
+      errorMessage: "Color should be selected",
       custom: {
         options: value => {
           return value.indexOf("#") === 0;
         },
-        errorMessage: "# not included"
+        errorMessage: "Color should be selected"
+      }
+    },
+    icon: {
+      isLength: {
+        options: { min: 1, max: undefined },
+        errorMessage: "Icons should be selected"
       }
     }
   });

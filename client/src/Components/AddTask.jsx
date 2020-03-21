@@ -1,5 +1,5 @@
 import React from "react";
-
+import FormHelperText from "@material-ui/core/FormHelperText";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import withDialog from "../HOCs/withDialog";
@@ -79,8 +79,10 @@ class AddTask extends React.Component {
     return (
       <>
         <TextField
-          margin="normal"
-          required
+          error={this.props.error.param === "title"}
+          helperText={
+            this.props.error.param === "title" && this.props.error.msg
+          }
           fullWidth
           id="tasks"
           label="Title"
@@ -92,7 +94,10 @@ class AddTask extends React.Component {
           onChange={this.handleChange("title")}
         />
         <TextField
-          required
+          error={this.props.error.param === "description"}
+          helperText={
+            this.props.error.param === "description" && this.props.error.msg
+          }
           margin="normal"
           fullWidth
           name="description"
@@ -104,12 +109,14 @@ class AddTask extends React.Component {
           val={this.state.request.description}
           onChange={this.handleChange("description")}
         />
-        <FormControl style={{ width: "100%", marginTop: "16px" }}>
+        <FormControl
+          style={{ width: "100%", marginTop: "16px" }}
+          error={this.props.error.param === "campaigns_id"}
+        >
           <InputLabel htmlFor="outlined-age-native-simple">
             Belongs to Campaign
           </InputLabel>
           <Select
-            required
             native
             value={this.state.request.campaigns_id || ""}
             onChange={this.handleChange("campaigns_id")}
@@ -121,6 +128,9 @@ class AddTask extends React.Component {
               </option>
             ))}
           </Select>
+          {this.props.error.param === "campaigns_id" && (
+            <FormHelperText>{this.props.error.msg}</FormHelperText>
+          )}
         </FormControl>
       </>
     );
