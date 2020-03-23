@@ -60,17 +60,6 @@ const validateUpdateCampaign = () =>
       isLength: {
         options: { min: 3, max: undefined },
         errorMessage: "Title should be at least 3 characters"
-      },
-      custom: {
-        options: value => {
-          return knex("campaigns")
-            .where({ title: value })
-            .then(arr => {
-              if (arr.length === 1) {
-                return Promise.reject("campaign is already in use");
-              }
-            });
-        }
       }
     },
     color: {
