@@ -83,6 +83,16 @@ const BtnGroup = styled.div`
     border-bottom: 1.5px solid rgba(0, 0, 0, 0.9);
   }
 `;
+const BtnGroupErr = styled.div`
+  margin-top: 30px;
+  border-bottom: 1.5px solid rgb(244, 67, 53);
+  border-collapse: separate;
+  display: inline-table;
+  padding: 7px 10px;
+  padding-left: 0;
+  padding: 0;
+  background: none;
+`;
 
 const Btn = styled.button`
   border: none;
@@ -151,38 +161,78 @@ export default class IconPicker extends React.Component {
   render() {
     return (
       <>
-        <BtnGroup
-          style={{ padding: "0" }}
-          onClick={this.props.handleOpenIconPicker}
-        >
-          <Btn type="button">
-            {this.props.selectedIcon ? (
-              <span
-                className={this.props.selectedIcon}
-                style={{ color: "#4db6ac", fontSize: "18px" }}
-              ></span>
-            ) : (
-              <span
-                style={{
-                  fontSize: "1rem",
-                  color: "rgba(0, 0, 0, 0.54)"
-                }}
-              >
-                Choose icon for campaign
-              </span>
-            )}
-          </Btn>
-          <Btn
-            style={{
-              fontSize: "1rem",
-              color: "rgba(0, 0, 0, 0.54)",
-              textAlign: "right",
-              float: "right"
-            }}
+        {this.props.error.param === "icon" ? (
+          <BtnGroupErr
+            style={{ padding: "0" }}
+            onClick={this.props.handleOpenIconPicker}
           >
-            <FontAwesomeIcon icon={faSortDown} />
-          </Btn>
-        </BtnGroup>
+            <Btn
+              type="button"
+              style={{ borderBottom: "0.5px solid rgb(244, 67, 53)" }}
+            >
+              {this.props.selectedIcon ? (
+                <span
+                  className={this.props.selectedIcon}
+                  style={{ color: "#4db6ac", fontSize: "18px" }}
+                ></span>
+              ) : (
+                <span
+                  style={{
+                    fontSize: "1rem",
+                    color: "rgb(244, 67, 53)"
+                  }}
+                >
+                  Icon should be selected
+                </span>
+              )}
+            </Btn>
+            <Btn
+              style={{
+                fontSize: "1rem",
+                color: "rgba(0, 0, 0, 0.54)",
+                textAlign: "right",
+                float: "right",
+                borderBottom: "0.5px solid rgb(244, 67, 53)"
+              }}
+            >
+              <FontAwesomeIcon icon={faSortDown} />
+            </Btn>
+          </BtnGroupErr>
+        ) : (
+          <BtnGroup
+            style={{ padding: "0" }}
+            onClick={this.props.handleOpenIconPicker}
+          >
+            <Btn type="button">
+              {this.props.selectedIcon ? (
+                <span
+                  className={this.props.selectedIcon}
+                  style={{ color: "#4db6ac", fontSize: "18px" }}
+                ></span>
+              ) : (
+                <span
+                  style={{
+                    fontSize: "1rem",
+                    color: "rgba(0, 0, 0, 0.54)"
+                  }}
+                >
+                  Choose icon for campaign
+                </span>
+              )}
+            </Btn>
+            <Btn
+              style={{
+                fontSize: "1rem",
+                color: "rgba(0, 0, 0, 0.54)",
+                textAlign: "right",
+                float: "right"
+              }}
+            >
+              <FontAwesomeIcon icon={faSortDown} />
+            </Btn>
+          </BtnGroup>
+        )}
+
         <div style={{ position: "relative" }}>
           {this.props.iconPickerModal && (
             <IconListWrap

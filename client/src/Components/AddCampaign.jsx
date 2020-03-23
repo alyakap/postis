@@ -101,6 +101,7 @@ class AddCampaign extends React.Component {
             <FormHelperText>{this.props.error.msg}</FormHelperText>
           )}
           <IconPicker
+            error={this.props.error}
             handleChangeIcon={this.handleChangeIcon}
             selectedIcon={this.state.data.icon}
             iconPickerModal={this.state.iconPicker}
