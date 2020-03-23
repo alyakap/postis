@@ -143,6 +143,7 @@ class EditCampaign extends React.Component {
             <FormHelperText>{this.props.error.msg}</FormHelperText>
           )}
           <IconPicker
+            error={this.props.error}
             handleChangeIcon={this.handleChangeIcon}
             selectedIcon={this.state.request.data.icon}
             iconPickerModal={this.state.iconPicker}
