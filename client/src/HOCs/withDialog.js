@@ -53,7 +53,6 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
         settingsObject
           .submit(this.state.data)
           .then(resp => {
-            //console.log(resp);
             this.props.toggle();
             this.props.getItems();
             switch (settingsObject.title) {
@@ -111,7 +110,7 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
             aria-labelledby="form-dialog-title"
           >
             <form
-              id="myform"
+              id="myForm"
               onSubmit={this.handleSubmit}
               className={classes.form}
               noValidate
@@ -138,7 +137,7 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
                 <Button onClick={() => this.props.toggle()} color="primary">
                   Cancel
                 </Button>
-                <Button type="submit" form="myform" color="primary">
+                <Button type="submit" form="myForm" color="primary">
                   Okay
                 </Button>
               </DialogActions>
