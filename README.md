@@ -1,6 +1,9 @@
-**My assignment - POSTIS**
+<img src="assets/postis-header.png" />
 
+# Postis 
 At Optis we have a ‘marketing’ team that makes sure that the Optis Branding is consistent, relevant and attractive in its industry. As all companies we therefore use social media channels. In order to plan the content we post on these, we want to create a webapplication that all team members can use and work together on. The application will consist of 3 pages:
+
+<img src="assets/postis.gif" />
 
 ## Tasks
 
@@ -15,3 +18,30 @@ A campaign can be around a long term or short term focus point for Optis. We sho
 ## Dashboard
 
 The dashboard should show the latest activity. E.g. Kjell created a task “Make picture of Mathi’s talk” 10 minutes ago. 
+
+## Technologies
+For this project the following technologies were used:
+- HTML, CSS, Material-UI and React for front-end
+- NodeJs for back-end
+- PostgreSQL-Knex for database
+
+## Installation
+
+To install and run the project, follow these steps:
+
+1. Clone the Git project off of GitHub:
+
+`git clone git@github.com/ZHanimK/postis/`
+
+2. Browse to the project folder in your terminal
+
+`cd postis`
+
+3. Browse client folder in project root in your terminal for install frontend
+
+`cd client`
+
+4. Browse server folder in project root in your terminal for install backend
+
+`npm install`
+`npm start`
