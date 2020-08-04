@@ -93,7 +93,6 @@ const withDialog = (settingsObject = {}) => WrappedComponent => {
           })
           .catch(error => {
             let errObj = JSON.parse(error.response.request.response);
-            console.log("2", errObj.errors[0]);
             this.setState({
               error: errObj.errors[0]
             });
