@@ -9,11 +9,9 @@ At Optis we have a ‘marketing’ team that makes sure that the Optis Branding 
 
 This page should consist of a list of all tasks we want to accomplish and be reminded about. E.g. If we have a team meeting next week, we want to create a reminder task, so we don’t forget to create a tweet about this. A task should also be able to be marked as DONE. 
 
-
 ## Campaigns
 
 A campaign can be around a long term or short term focus point for Optis. We should be able to group a set of tasks as part of a campaign. E.g. Create a React Campaign, so we regularly post something about React, so the world knows we do a lot of react development. 
-
 
 ## Dashboard
 
@@ -41,7 +39,22 @@ To install and run the project, follow these steps:
 
 `cd client`
 
-4. Browse server folder in project root in your terminal for install backend
+4. install dependencies and start
 
 `npm install`
 `npm start`
+
+5. Browse server folder in project root in your terminal for install backend
+
+`cd server`
+`npm install`
+
+6. install demo-data (migrations and seeds)
+
+`npm run migrate-dev`
+`npm run seed-dev`
+
+7. start server 
+
+`npm start`
+
