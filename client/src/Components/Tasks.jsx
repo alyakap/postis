@@ -27,30 +27,30 @@ import {
   Container,
   Typography,
   Fab,
-  LinearProgress
+  LinearProgress,
 } from "@material-ui/core";
-const styles = theme => ({
+const styles = (theme) => ({
   table: {
-    minWidth: 650
+    minWidth: 650,
   },
   root: {
-    width: "100%"
+    width: "100%",
   },
   container: {
     paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(4)
+    paddingBottom: theme.spacing(4),
   },
   primary: {
-    backgroundColor: "#4DB6AC"
-  }
+    backgroundColor: "#4DB6AC",
+  },
 });
 const ColorLinearProgress = withStyles({
   colorPrimary: {
-    backgroundColor: "#b2dfdb"
+    backgroundColor: "#b2dfdb",
   },
   barColorPrimary: {
-    backgroundColor: "#00695c"
-  }
+    backgroundColor: "#00695c",
+  },
 })(LinearProgress);
 class Tasks extends Component {
   constructor(props) {
@@ -59,14 +59,14 @@ class Tasks extends Component {
       tasks: {
         loading: false,
         error: false,
-        data: []
+        data: [],
       },
       selectedId: "",
       selectedTitle: "",
       selectedAssignedUser: "",
       addTaskModal: false,
       editTaskModal: false,
-      assignTaskModal: false
+      assignTaskModal: false,
     };
   }
   componentDidMount() {
@@ -74,66 +74,66 @@ class Tasks extends Component {
       ...this.state,
       tasks: {
         ...this.state.tasks,
-        loading: true
-      }
+        loading: true,
+      },
     });
     this.getTasks();
   }
   getTasks = () => {
     const {
-      props: { campaignId }
+      props: { campaignId },
     } = this;
     const url = campaignId
       ? `${process.env.REACT_APP_API_URL}/tasks/fromcampaign/${campaignId}`
       : `${process.env.REACT_APP_API_URL}/tasks`;
     axios
       .get(url)
-      .then(response => {
+      .then((response) => {
         if (response.data) {
           this.setState({
             tasks: {
               loading: false,
               error: false,
-              data: [...response.data]
-            }
+              data: [...response.data],
+            },
           });
         } else {
           this.setState({
             tasks: {
               error: false,
               loading: false,
-              data: []
-            }
+              data: [],
+            },
           });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({
           ...this.state,
           tasks: {
             ...this.state.tasks,
             error: true,
-            loading: false
-          }
+            loading: false,
+          },
         });
         throw error;
       });
   };
-  formatDateTime = tasTime => {
+  formatDateTime = (tasTime) => {
     var date = new Date(tasTime);
     return dateFormat(date, "mmm d, h:MM");
   };
   handleToggleModalAddTask = () => {
     this.setState({
       ...this.state,
-      addTaskModal: !this.state.addTaskModal
+      addTaskModal: !this.state.addTaskModal,
     });
   };
-  handleToggleModalEditTask = id => {
+  handleToggleModalEditTask = (id) => {
     this.setState({
       ...this.state,
       selectedId: id,
-      editTaskModal: !this.state.editTaskModal
+      editTaskModal: !this.state.editTaskModal,
     });
   };
   handleToggleModalAssignTask = (id, title, assigned_user) => {
@@ -142,18 +142,18 @@ class Tasks extends Component {
       selectedId: id,
       selectedTitle: title,
       selectedAssignedUser: assigned_user,
-      assignTaskModal: !this.state.assignTaskModal
+      assignTaskModal: !this.state.assignTaskModal,
     });
   };
 
-  deleteTask = id => {
+  deleteTask = (id) => {
     const refresh = this.getTasks;
     axios
       .delete(`${process.env.REACT_APP_API_URL}/tasks/${id}`, { id })
-      .then(function(response) {
+      .then(function (response) {
         refresh();
       })
-      .catch(function(error) {
+      .catch(function (error) {
         throw error;
       });
   };
@@ -203,7 +203,7 @@ class Tasks extends Component {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  marginTop: "60px"
+                  marginTop: "60px",
                 }}
               >
                 <Typography
@@ -240,15 +240,15 @@ class Tasks extends Component {
                       <TableCell>Details</TableCell>
                       <TableCell align="left">Title</TableCell>
                       <TableCell align="right">Campaign</TableCell>
-                      <TableCell align="right"></TableCell>
-                      <TableCell align="right">Assigned User</TableCell>
                       <TableCell align="right">
                         <FontAwesomeIcon icon={faCalendar} />
                       </TableCell>
+                      <TableCell align="right">Assigned User</TableCell>
+                      <TableCell align="right"></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {this.state.tasks.data.map(task => (
+                    {this.state.tasks.data.map((task) => (
                       <TableRow key={task.id}>
                         <TableCell component="th" scope="row">
                           <Link to={`/task/${task.id}`}>
@@ -266,7 +266,7 @@ class Tasks extends Component {
                         </TableCell>
                         <TableCell align="right">
                           <Button
-                            onClick={e =>
+                            onClick={(e) =>
                               this.handleToggleModalAssignTask(
                                 task.id,
                                 task.title,
@@ -275,7 +275,7 @@ class Tasks extends Component {
                             }
                           >
                             <Chip
-                              onClick={e =>
+                              onClick={(e) =>
                                 this.handleToggleModalAssignTask(
                                   task.id,
                                   task.title,
@@ -293,7 +293,7 @@ class Tasks extends Component {
                         </TableCell>
                         <TableCell align="right">
                           <Button
-                            onClick={e =>
+                            onClick={(e) =>
                               this.handleToggleModalEditTask(task.id)
                             }
                           >
