@@ -84,8 +84,8 @@ class Tasks extends Component {
       props: { campaignId },
     } = this;
     const url = campaignId
-      ? `${process.env.REACT_APP_API_URL}/tasks/fromcampaign/${campaignId}`
-      : `${process.env.REACT_APP_API_URL}/tasks`;
+      ? `http://localhost:4567/tasks/fromcampaign/${campaignId}`
+      : `http://localhost:4567/tasks`;
     axios
       .get(url)
       .then((response) => {
@@ -149,7 +149,7 @@ class Tasks extends Component {
   deleteTask = (id) => {
     const refresh = this.getTasks;
     axios
-      .delete(`${process.env.REACT_APP_API_URL}/tasks/${id}`, { id })
+      .delete(`http://localhost:4567/tasks/${id}`, { id })
       .then(function (response) {
         refresh();
       })

@@ -71,7 +71,7 @@ class Task extends Component {
       }
     });
     axios
-      .get(`${process.env.REACT_APP_API_URL}/tasks/${this.state.id}`)
+      .get(`http://localhost:4567/tasks/${this.state.id}`)
       .then(response => {
         if (response.data) {
           this.setState({

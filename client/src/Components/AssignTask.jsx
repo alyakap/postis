@@ -19,7 +19,7 @@ class AssignTask extends React.Component {
   }
   static submit = data => {
     return axios.put(
-      `${process.env.REACT_APP_API_URL}/tasks/${data.taskId}/assign`,
+      `http://localhost:4567/tasks/${data.taskId}/assign`,
       {
         id: parseInt(data.assigned_user)
       }
@@ -35,7 +35,7 @@ class AssignTask extends React.Component {
       }
     });
     axios
-      .get(`${process.env.REACT_APP_API_URL}/users`)
+      .get(`http://localhost:4567/users`)
       .then(response => {
         if (response.data) {
           this.setState({

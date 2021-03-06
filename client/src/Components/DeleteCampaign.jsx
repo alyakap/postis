@@ -14,7 +14,7 @@ class DeleteCampaign extends React.Component {
   }
   static submit = campaign => {
     return axios.delete(
-      `${process.env.REACT_APP_API_URL}/campaigns/${campaign.id}`
+      `http://localhost:4567/campaigns/${campaign.id}`
     );
   };
   componentDidMount = () => {

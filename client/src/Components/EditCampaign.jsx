@@ -20,7 +20,7 @@ class EditCampaign extends React.Component {
   }
   static submit = data => {
     return axios.put(
-      `${process.env.REACT_APP_API_URL}/campaigns/${data.id}`,
+      `http://localhost:4567/campaigns/${data.id}`,
       data.request.data
     );
   };
@@ -35,7 +35,7 @@ class EditCampaign extends React.Component {
       }
     });
     axios
-      .get(`${process.env.REACT_APP_API_URL}/campaigns/${this.state.id}`)
+      .get(`http://localhost:4567/campaigns/${this.state.id}`)
       .then(response => {
         this.setState({
           ...this.state,

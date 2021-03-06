@@ -10,7 +10,6 @@ import {
   ExpansionPanelSummary,
   Typography
 } from "@material-ui/core";
-
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Container } from "@material-ui/core";
@@ -98,7 +97,7 @@ class Campaigns extends React.Component {
 
   getCampaigns = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/campaigns`)
+      .get(`http://localhost:4567/campaigns`)
       .then(response => {
         if (response.data) {
           const newData = response.data.map(campaign => {
